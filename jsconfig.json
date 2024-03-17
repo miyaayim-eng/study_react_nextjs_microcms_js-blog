@@ -1,7 +1,10 @@
 {
   "compilerOptions": {
     "paths": {
-      "@/*": ["./src/*"]
-    }
+      "@/*": ["./src/*"],
+      "@global": ["./src/scss/global/_index.scss"]
+    },
+    "jsx": "react",
+    "baseUrl": "."
   }
 }

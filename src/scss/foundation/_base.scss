@@ -1,0 +1,37 @@
+@charset "UTF-8";
+@use "@global" as *;
+
+:root {
+  --black: #333;
+  --white: #fff;
+  --ff-body: "Noto Sans JP", sans-serif;
+}
+
+html {
+  overflow-y: scroll;
+  // scroll-behavior: smooth;
+}
+
+body {
+  position: relative;
+  font-family: var(--ff-body);
+  color: var(--black);
+  line-height: 1.7;
+  letter-spacing: 0.05em;
+  min-height: 100dvh;
+  background-color: #eee;
+}
+
+a {
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  vertical-align: bottom;
+}
+
+li {
+  list-style: none;
+}

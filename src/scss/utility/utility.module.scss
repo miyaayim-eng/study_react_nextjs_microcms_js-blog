@@ -1,0 +1,14 @@
+@use "@global" as *;
+
+.inner {
+  max-width: 1500px;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.ele__center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
