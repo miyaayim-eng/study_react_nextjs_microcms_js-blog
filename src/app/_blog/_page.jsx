@@ -16,37 +16,19 @@ export default async function Home() {
   // const [category, setCategory] = useState([]);
 
   // ブログ一覧を取得
-  const listResponse = await getList();
-
-  // 取得しているデータがわかりやすいように、変数名を変更しています。
-  const { data: posts, error: listError } = await listResponse.json();
-
-  // この時点の'response'の中身は、
-  // [{id:(...), title:(...), content:(...)},{id:(...), title:(...), content:(...)}]
-  // といった感じ。
+  const { contents: posts } = await getList();
   // console.log("posts => ", posts);
 
   // ブログカテゴリーを取得
-  const categoriesResponse = await getCategories();
-
-  // 取得しているデータがわかりやすいように、変数名を変更しています。
-  const { data: categories, error: categoriesError } =
-    await categoriesResponse.json();
+  const { contents: categories } = await getCategories();
   // console.log("categories => ", categories);
 
   // ページの生成された時間を取得
   const time = new Date().toLocaleString();
 
-  if (listError != null) {
-    return <div>記事リスト取得エラーが発生しました。</div>;
-  }
-  if (categoriesError != null) {
-    return <div>カテゴリ取得エラーが発生しました。</div>;
-  }
-
   // 記事がない場合
   if (!posts || posts.length === 0) {
-    return <h1>記事が0件でした。</h1>;
+    return <h1>No posts</h1>;
   }
 
   return (
@@ -58,9 +40,6 @@ export default async function Home() {
       />
       <div>
         <h1>生成time: {time}</h1>
-        <li>
-          <Link href="/blog/test">/blog/testへのリンク</Link>
-        </li>
         {posts.map((post) => (
           <li key={post.id}>
             <Link href={`/blog/${post.id}`}>{post.title}</Link>

@@ -17,17 +17,13 @@ import { getDetail, getList } from "../../../libs/microcms";
 // パラメータオブジェクトの配列を作成し、それを返します。
 // これにより、Next.jsはビルド時に各ブログポストの詳細ページを
 // 事前に生成できるようになります。
-// 自分のまとめ：これがなくても表示は問題なくできるが、build時に事前に生成しておくことで、データ取得をせずとも事前に用意したデータを表示することでページ表示速度が向上する。ということだと思う。
 export async function generateStaticParams() {
   // ブログ一覧をAPI経由で取得します
-  const listResponse = await getList();
-
-  // 取得しているデータがわかりやすいように、変数名を変更しています。
-  const { data: posts, error: listError } = await listResponse.json();
+  const { contents } = await getList();
 
   // 取得したブログ一覧から、各ブログのIDを使用して
   // ページ生成に必要なパラメータオブジェクトの配列を作成します
-  const paths = posts.map((post) => {
+  const paths = contents.map((post) => {
     // 各ブログポストのIDを用いて、必要なパラメータオブジェクトを作成
     // 'postId'キーに対応する値としてpost.idを設定
     // これにより、各生成されるページに対して、どのブログポストのデータを
@@ -46,8 +42,7 @@ export default async function Home({ params }) {
   // URLパラメータのIDを参照して、ブログの詳細を取得
   // await console.log("params => ", params);
   const { postId } = params;
-  const detailResponse = await getDetail(postId);
-  const { data: post, error: detailError } = await detailResponse.json();
+  const post = await getDetail(postId);
 
   // ページの生成された時間を取得
   const time = new Date().toLocaleString();
