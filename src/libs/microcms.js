@@ -25,11 +25,15 @@ export const getList = async (queries) => {
       endpoint: "posts",
       // 'queries'は絞り込みの（例：'limit'等）パラメータを受け取るためのもの
       queries,
-      customRequestInit: {
-        next: {
-          revalidate: 0, // 0秒でページを再読み込み
-        },
-      },
+
+      // revalidateでオプションを指定することで動的（Dynamic Rendering）なレンダリングとなる。
+      // 'revalidate = 60'とすれば60秒間はキャッシュを利用するISR
+      // 'revalidate = 0'とすれば常にレンダリングを行うSSR
+      // customRequestInit: {
+      //   next: {
+      //     revalidate: 0, // 0秒でページを再読み込み
+      //   },
+      // },
     });
 
     // この時点の'response'の中身は、
@@ -63,11 +67,15 @@ export const getDetail = async (contentId, queries) => {
       // 'contentId'はIDを受け取り、取得する詳細記事を判別するためのもの
       contentId,
       queries,
-      customRequestInit: {
-        next: {
-          revalidate: 0,
-        },
-      },
+
+      // revalidateでオプションを指定することで動的（Dynamic Rendering）なレンダリングとなる。
+      // 'revalidate = 60'とすれば60秒間はキャッシュを利用するISR
+      // 'revalidate = 0'とすれば常にレンダリングを行うSSR
+      // customRequestInit: {
+      //   next: {
+      //     revalidate: 0,
+      //   },
+      // },
     });
 
     // データの取得が目視しやすいよう明示的に遅延効果を追加
@@ -89,11 +97,15 @@ export const getCategories = async (queries) => {
     const response = await client.getList({
       endpoint: "categories",
       queries,
-      customRequestInit: {
-        next: {
-          revalidate: 0,
-        },
-      },
+
+      // revalidateでオプションを指定することで動的（Dynamic Rendering）なレンダリングとなる。
+      // 'revalidate = 60'とすれば60秒間はキャッシュを利用するISR
+      // 'revalidate = 0'とすれば常にレンダリングを行うSSR
+      // customRequestInit: {
+      //   next: {
+      //     revalidate: 0,
+      //   },
+      // },
     });
     // console.log("categoriesData => ", response);
 
