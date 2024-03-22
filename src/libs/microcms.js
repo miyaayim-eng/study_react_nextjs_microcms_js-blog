@@ -1,6 +1,6 @@
 import { createClient } from "microcms-js-sdk";
 import { NextResponse } from "next/server";
-import { redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 
 // '.env.local'ファイルにmicroCMSの'サービスドメイン'、'APIキー'が無い場合はエラーメッセージを表示
 if (!process.env.MICROCMS_SERVICE_DOMAIN) {
@@ -19,10 +19,10 @@ export const client = createClient({
 });
 
 // ブログ記事一覧を取得
-export const getList = async (queries) => {
+export const getArticlesList = async (queries) => {
   try {
     const response = await client.getList({
-      endpoint: "posts",
+      endpoint: "articles",
       // 'queries'は絞り込みの（例：'limit'等）パラメータを受け取るためのもの
       queries,
 
@@ -39,17 +39,14 @@ export const getList = async (queries) => {
     // この時点の'response'の中身は、
     // contents: [{id:(...), title:(...), content:(...)},{id:(...), title:(...), content:(...)}]
     // といった感じ。
-    // console.log("listData => ", response);
-
-    // データの取得が目視しやすいよう明示的に遅延効果を追加
-    // await new Promise((resolve) => setTimeout(resolve, 1000));
+    // console.log("articlesListData => ", response);
 
     return NextResponse.json({
       data: response.contents ?? null,
       error: null,
     });
-  } catch {
-    console.error("getListのエラーが発生しました", error);
+  } catch (error) {
+    console.error("getArticlesListでエラーが発生しました", error);
     return NextResponse.json({
       data: null,
       error: error.message,
@@ -58,12 +55,10 @@ export const getList = async (queries) => {
 };
 
 // ブログ記事詳細を取得
-export const getDetail = async (contentId, queries) => {
+export const getArticlesDetail = async (contentId, queries) => {
   try {
-    // 'getListDetail'ではなく'get'でやってる人がいた？調べること
-    // 多分だけど、名前は自由に命名できるってだけかも。命名することができる理由は調べてない
     const response = await client.getListDetail({
-      endpoint: "posts",
+      endpoint: "articles",
       // 'contentId'はIDを受け取り、取得する詳細記事を判別するためのもの
       contentId,
       queries,
@@ -78,16 +73,13 @@ export const getDetail = async (contentId, queries) => {
       // },
     });
 
-    // データの取得が目視しやすいよう明示的に遅延効果を追加
-    // await new Promise((resolve) => setTimeout(resolve, 1000));
-
     return NextResponse.json({
       data: response ?? null,
       error: null,
     });
   } catch (error) {
-    console.error("getDetailのエラーが発生しました", error);
-    redirect("/404");
+    console.error("getArticlesDetailでエラーが発生しました", error);
+    notFound();
   }
 };
 
@@ -107,17 +99,15 @@ export const getCategories = async (queries) => {
       //   },
       // },
     });
-    // console.log("categoriesData => ", response);
 
-    // データの取得が目視しやすいよう明示的に遅延効果を追加
-    // await new Promise((resolve) => setTimeout(resolve, 1000));
+    // console.log("categoriesData => ", response);
 
     return NextResponse.json({
       data: response.contents ?? null,
       error: null,
     });
-  } catch {
-    console.error("getCategoriesのエラーが発生しました", error);
+  } catch (error) {
+    console.error("getCategoriesでエラーが発生しました", error);
     return NextResponse.json({
       data: null,
       error: error.message,

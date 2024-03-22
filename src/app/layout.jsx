@@ -4,8 +4,8 @@
 import "src/scss/foundation/_index.scss";
 
 // 共通のパーツ
-import { Header } from "src/components/layouts/Header/Header";
-import { Footer } from "src/components/layouts/Footer/Footer";
+import { Header } from "src/_components/layouts/Header/Header";
+import { Footer } from "src/_components/layouts/Footer/Footer";
 
 // 共通のmetaタグ
 export const metadata = {

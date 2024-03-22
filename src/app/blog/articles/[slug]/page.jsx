@@ -1,15 +1,10 @@
-// "use client";
-// import axios from "axios";
-
-// import { useState } from "react";
-// import { useState, useEffect } from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 // リッチディタで作成したコンテンツ部分をHTMLパースするためのモジュール
 import parse from "html-react-parser";
 import styles from "./page.module.scss";
 import utility from "src/scss/utility/utility.module.scss";
-import { getDetail, getList } from "../../../libs/microcms";
+import { getArticlesList, getArticlesDetail } from "../../../../libs/microcms";
 
 // この関数は、静的サイト生成（SSG）のために、ビルド時に事前生成すべき
 // ページのパスを動的に生成します。具体的には、microCMSから取得した
@@ -20,20 +15,21 @@ import { getDetail, getList } from "../../../libs/microcms";
 // 自分のまとめ：これがなくても表示は問題なくできるが、build時に事前に生成しておくことで、データ取得をせずとも事前に用意したデータを表示することでページ表示速度が向上する。ということだと思う。
 export async function generateStaticParams() {
   // ブログ一覧をAPI経由で取得します
-  const listResponse = await getList();
+  const articlesListResponse = await getArticlesList();
 
   // 取得しているデータがわかりやすいように、変数名を変更しています。
-  const { data: posts, error: listError } = await listResponse.json();
+  const { data: articles, error: articlesListError } =
+    await articlesListResponse.json();
 
   // 取得したブログ一覧から、各ブログのIDを使用して
   // ページ生成に必要なパラメータオブジェクトの配列を作成します
-  const paths = posts.map((post) => {
+  const paths = articles.map((article) => {
     // 各ブログポストのIDを用いて、必要なパラメータオブジェクトを作成
-    // 'postId'キーに対応する値としてpost.idを設定
+    // 'articleId'キーに対応する値として'article.id'を設定
     // これにより、各生成されるページに対して、どのブログポストのデータを
     // 取得して表示するかを指定するための情報を提供します
     return {
-      postId: post.id,
+      slug: article.id,
     };
   });
   // await console.log("paths => ", paths);
@@ -42,18 +38,19 @@ export async function generateStaticParams() {
   return [...paths];
 }
 
-export default async function Home({ params }) {
+export default async function Page({ params }) {
   // URLパラメータのIDを参照して、ブログの詳細を取得
   // await console.log("params => ", params);
-  const { postId } = params;
-  const detailResponse = await getDetail(postId);
-  const { data: post, error: detailError } = await detailResponse.json();
+  const { slug } = params;
+  const articlesDetailResponse = await getArticlesDetail(slug);
+  const { data: article, error: articlesDetailError } =
+    await articlesDetailResponse.json();
 
   // ページの生成された時間を取得
   const time = new Date().toLocaleString();
 
   // 記事がない場合は'404 Not Found'を表示
-  if (!post) {
+  if (!article) {
     notFound();
   }
 
@@ -61,8 +58,8 @@ export default async function Home({ params }) {
     <div className={`${styles.container} ${utility.inner}`}>
       <Link href="/blog">一覧にもどる</Link>
       <h2>生成time:{time}</h2>
-      <h1>{post.title}</h1>
-      <div>{parse(post.content)}</div>
+      <h1>{article.title}</h1>
+      <div>{parse(article.content)}</div>
     </div>
   );
 }

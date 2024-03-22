@@ -1,6 +1,6 @@
-// import Link from "next/link";
-import { getArticlesList } from "../../libs/microcms";
-import { getCategories } from "../../libs/microcms";
+import Link from "next/link";
+import { getArticlesList } from "../../../../libs/microcms";
+import { getCategories } from "../../../../libs/microcms";
 import styles from "./page.module.scss";
 import utility from "src/scss/utility/utility.module.scss";
 
@@ -8,10 +8,8 @@ import { Categories } from "@/_features/components/blog/Categories/Categories";
 import { ArticlesList } from "@/_features/components/blog/Article/ArticlesList/ArticlesList";
 
 export async function generateStaticParams() {
-  // ブログカテゴリー一覧をAPI経由で取得します
   const categoriesResponse = await getCategories();
 
-  // 取得しているデータがわかりやすいように、変数名を変更しています。
   const { data: categories, error: categoriesError } =
     await categoriesResponse.json();
 
@@ -22,22 +20,18 @@ export async function generateStaticParams() {
   });
   // await console.log("paths => ", paths);
 
-  // 作成したパスの配列を返します。
   return [...paths];
 }
 
-export default async function Page() {
+export default async function Page({ params }) {
+  // console.log(params);
   // ブログ一覧を取得
-  const articlesListResponse = await getArticlesList();
+  const filters = `category[equals]${params.categoryId}`;
+  const articlesListResponse = await getArticlesList({ filters });
 
   // 取得しているデータがわかりやすいように、変数名を変更しています。
   const { data: articles, error: articlesListError } =
     await articlesListResponse.json();
-
-  // この時点の'data'の中身は、
-  // [{id:(...), title:(...), content:(...)},{id:(...), title:(...), content:(...)}]
-  // といった感じ。
-  // console.log("articles => ", articles);
 
   // ブログカテゴリーを取得
   const categoriesResponse = await getCategories();
@@ -64,22 +58,8 @@ export default async function Page() {
 
   return (
     <div className={`${styles.container} ${utility.inner}`}>
-      <Categories categories={categories} />
+      <Categories categories={categories} params={params} />
       <ArticlesList articles={articles} />
-
-      {/* <div>
-        <h1>生成time: {time}</h1>
-        <ul>
-          {articles.map((article) => {
-            return (
-              <li key={article.id}>
-                <Link href={`/blog/${article.id}`}>{article.title}</Link>
-                <p>{article.id}</p>
-              </li>
-            );
-          })}
-        </ul>
-      </div> */}
     </div>
   );
 }
