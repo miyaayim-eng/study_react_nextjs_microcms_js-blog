@@ -1,11 +1,10 @@
-// import React from "react";
-
 // 共通のCSS
-import "src/scss/foundation/_index.scss";
+import "@sass/foundation/_index.scss";
 
 // 共通のパーツ
-import { Header } from "src/_components/layouts/Header/Header";
-import { Footer } from "src/_components/layouts/Footer/Footer";
+import { Svg } from "@/components/elements/Svg";
+import { Header } from "@/components/layouts/Header";
+import { Footer } from "@/components/layouts/Footer";
 
 // 共通のmetaタグ
 export const metadata = {
@@ -31,12 +30,15 @@ export const metadata = {
 // 共通の見た目
 export default function RootLayout({ children }) {
   return (
-    <html lang="ja">
-      <body>
-        <Header />
-        <main>{children}</main>
-        <Footer />
-      </body>
-    </html>
+    <>
+      <html lang="ja">
+        <body>
+          <Svg />
+          <Header />
+          <main>{children}</main>
+          <Footer />
+        </body>
+      </html>
+    </>
   );
 }

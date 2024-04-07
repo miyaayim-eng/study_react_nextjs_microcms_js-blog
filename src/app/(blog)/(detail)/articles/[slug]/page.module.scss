@@ -1,0 +1,50 @@
+@use "@global" as *;
+
+.inner {
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+
+  grid-template-areas:
+    "nav nav"
+    "ttl toc"
+    "cont toc";
+
+  gap: 32px;
+
+  @include mq(lg) {
+    // grid-template-columns: none;
+    // row-gap: 50px;
+  }
+}
+
+.areaNavigation {
+  grid-area: nav;
+  background-color: #eee;
+  // padding: 20px;
+  margin-bottom: 24px;
+}
+.areaTitle {
+  grid-area: ttl;
+  background-color: #eee;
+  padding: 20px;
+}
+.areaContents {
+  grid-area: cont;
+  background-color: #eee;
+  padding: 20px;
+}
+.areaToc {
+  position: relative;
+  grid-area: toc;
+}
+.tocBlock {
+  position: sticky;
+  top: 50px;
+  background-color: #eee;
+  padding: 20px;
+}

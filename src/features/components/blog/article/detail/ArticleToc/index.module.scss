@@ -1,0 +1,21 @@
+@use "@global" as *;
+
+.title {
+  display: flex;
+  align-items: center;
+  column-gap: 0.15em;
+  font-size: to-rem(24);
+  font-weight: 700;
+  color: var(--color-text_head);
+  line-height: 1;
+  margin-bottom: 24px;
+
+  &__icon {
+    width: 1em;
+    aspect-ratio: 1 / 1;
+  }
+
+  &__text {
+    margin-top: var(--text-minus-margin);
+  }
+}

@@ -1,0 +1,18 @@
+@use "sass:map";
+@use "sass:math";
+@use "../variables/" as *;
+
+//* -------------------------------------------------------
+//* 'c-inner'で使用するレイアウト調整
+//* -------------------------------------------------------
+@mixin content-inner($size) {
+  $max_width: (
+    // s: var(--contents_width_s),
+    m: var(--contents_width_m),
+    l: var(--contents_width_l)
+  ) !default;
+
+  width: calc(100% - var(--body_paddingSide_variable) * 2);
+  max-width: #{map.get($max_width, $size)};
+  margin-inline: auto;
+}

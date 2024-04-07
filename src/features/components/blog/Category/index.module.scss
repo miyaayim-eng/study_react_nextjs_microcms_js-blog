@@ -1,0 +1,32 @@
+@use "@global" as *;
+
+.link {
+  display: flex;
+  align-items: center;
+  column-gap: 4px;
+  padding: 5px 10px;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--color-border);
+  background-color: var(--color-white);
+  box-shadow: var(--box-shadow);
+  transition: var(--transition_element);
+  transition-property: color, background-color;
+
+  @include hover {
+    // color: var(--color-white);
+    background-color: var(--color-secondary);
+  }
+}
+
+.current {
+  color: var(--color-white);
+  background-color: var(--color-text);
+}
+
+.icon {
+  width: 1rem;
+  aspect-ratio: 1/1;
+}
+.text {
+  margin-top: var(--text-minus-margin);
+}

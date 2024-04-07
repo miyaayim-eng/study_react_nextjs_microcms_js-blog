@@ -1,0 +1,17 @@
+@use "@global" as *;
+
+.date {
+  font-size: to-rem(14);
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  column-gap: 4px;
+
+  &__icon__calendar {
+    width: 1em;
+    aspect-ratio: 1/1;
+  }
+  &__text {
+    @include ff-en;
+  }
+}

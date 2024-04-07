@@ -1,0 +1,40 @@
+@use "@global" as *;
+
+.category {
+}
+.list {
+  display: grid;
+  row-gap: 8px;
+}
+.item {
+}
+.link {
+  display: flex;
+  justify-content: space-between;
+  line-height: 1;
+  padding: 8px 16px;
+  border-radius: var(--border-radius);
+  border: 1px solid currentColor;
+  transition: var(--transition_element);
+  transition-property: background-color;
+  cursor: pointer;
+
+  &:last-child {
+  }
+
+  &:global(:not(.active)) {
+    @include hover {
+      background-color: var(--color-secondary);
+    }
+  }
+
+  &:global(.active) {
+    background-color: var(--color-secondary);
+  }
+}
+.text {
+}
+.icon {
+  width: 1em;
+  aspect-ratio: 1/1;
+}

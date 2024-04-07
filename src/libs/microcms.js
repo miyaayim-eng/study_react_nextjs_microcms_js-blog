@@ -44,6 +44,7 @@ export const getArticlesList = async (queries) => {
     return NextResponse.json({
       data: response.contents ?? null,
       error: null,
+      totalCount: response.totalCount,
     });
   } catch (error) {
     console.error("getArticlesListでエラーが発生しました", error);
@@ -108,6 +109,27 @@ export const getCategories = async (queries) => {
     });
   } catch (error) {
     console.error("getCategoriesでエラーが発生しました", error);
+    return NextResponse.json({
+      data: null,
+      error: error.message,
+    });
+  }
+};
+
+// ブログタグ一覧を取得
+export const getTags = async (queries) => {
+  try {
+    const response = await client.getList({
+      endpoint: "tags",
+      queries,
+    });
+
+    return NextResponse.json({
+      data: response.contents ?? null,
+      error: null,
+    });
+  } catch (error) {
+    console.error("getTagsでエラーが発生しました", error);
     return NextResponse.json({
       data: null,
       error: error.message,

@@ -1,0 +1,24 @@
+@use "@global" as *;
+
+.container {
+  container-type: inline-size;
+  container-name: list;
+}
+
+.list {
+  display: grid;
+  gap: 16px;
+  // background-color: var(--color-bg_block);
+  // padding: 8px 24px;
+  // border-radius: var(--border-radius);
+
+  @container (720px < width) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @container (480px < width <= 720px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @container (width <= 480px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}

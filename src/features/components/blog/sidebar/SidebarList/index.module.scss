@@ -1,0 +1,33 @@
+@use "@global" as *;
+
+.sidebar {
+  padding: 8px 24px;
+  border-radius: var(--border-radius);
+  background-color: var(--color-bg_block);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--box-shadow);
+}
+.sidebar__item {
+  padding-block: 24px;
+  &:not(:first-child) {
+    border-top: 2px dashed var(--color-gray);
+  }
+}
+.sidebar__title {
+  display: flex;
+  align-items: center;
+  column-gap: 0.15em;
+  font-size: to-rem(24);
+  color: var(--color-text_head);
+  font-weight: 700;
+  line-height: 1;
+  @include ff-en;
+  margin-bottom: 24px;
+
+  &__icon {
+    width: 1.5rem;
+    aspect-ratio: 1/1;
+  }
+  &__text {
+  }
+}

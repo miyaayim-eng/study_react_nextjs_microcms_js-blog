@@ -1,0 +1,33 @@
+@use "@global" as *;
+
+.link {
+  color: var(--color-text_element);
+  font-size: to-rem(14);
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  column-gap: 2px;
+  padding: 4px 8px;
+  // background-color: var(--color-bg_element);
+  border-radius: 100vh;
+  border: 1px solid currentColor;
+  transition: var(--transition_element);
+  transition-property: background-color;
+  cursor: pointer;
+
+  &:global(:not(.active)) {
+    @include hover {
+      background-color: var(--color-secondary);
+    }
+  }
+}
+
+.hashtag {
+  // @include ff-en;
+  font-size: to-rem(12);
+  margin-top: var(--text-minus-margin);
+}
+
+.text {
+  margin-top: var(--text-minus-margin);
+}
