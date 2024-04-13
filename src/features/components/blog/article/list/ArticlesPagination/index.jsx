@@ -6,6 +6,7 @@ export const ArticlesPagination = ({
   totalCount,
   currentPage = 1,
   basePath = "",
+  searchKeyword,
 }) => {
   // 全ページ数を計算
   const totalPages = Math.ceil(totalCount / LIMIT);
@@ -26,17 +27,29 @@ export const ArticlesPagination = ({
     pagesToShow = Array.from({ length: 3 }, (_, i) => currentPage - 1 + i);
   }
 
+  // 検索キーワードがある場合は、URL末尾に検索用のパラメータを挿入する関数
+  const generateSearchParam = () => {
+    return searchKeyword ? `?q=${searchKeyword}` : "";
+  };
+
+  // ページ番号に基づいて '/page/' 部分を挿入するか判断する関数
+  const generatePagePathSegment = (page) => {
+    // 1ページ目の場合は '/' を返し、それ以外は '/page/{page}' を返す
+    return page === 1 ? "/" : `/page/${page}`;
+  };
+
   // ページ番号に基づいてリンクのパスを生成する関数
   const generatePagePath = (page) => {
-    // 1ページ目の場合は basePathのページリンクを返す
-    if (page === 1) return `${basePath}/`;
-    // それ以外の場合は通常通りのページリンクを生成
-    return `${basePath}/page/${page}`;
+    // basePathに対して、必要に応じて'/page/{page}'部分と検索パラメータを追加
+    return `${basePath}${generatePagePathSegment(
+      page
+    )}${generateSearchParam()}`;
   };
 
   // console.log("totalCount => ", totalCount);
   // console.log("currentPage => ", currentPage);
-  // console.log("pages => ", pages);
+  // console.log("basePath => ", basePath);
+  // console.log("searchKeyword => ", searchKeyword);
 
   return (
     <>

@@ -1,8 +1,13 @@
 import styles from "./index.module.scss";
 import { getTags } from "@/libs/microcms";
 import { Tag } from "@/features/components/blog/Tag";
+import { getTagReferencedCount } from "@/libs/getTagReferencedCount";
 
 export const SidebarTags = async ({ params }) => {
+  // カテゴリごとの登録件数を取得
+  const tagCountData = await getTagReferencedCount();
+  // console.log("tagCountData => ", tagCountData);
+
   // ブログタグを取得
   const tagsResponse = await getTags();
 
@@ -25,11 +30,13 @@ export const SidebarTags = async ({ params }) => {
     <div className={styles.tags}>
       <ul className={styles.list}>
         {tags.map((tag) => {
-          return (
-            <li className={getActiveClass(tag.id)} key={tag.id}>
-              <Tag tag={tag} />
-            </li>
-          );
+          if (tagCountData[tag.id]) {
+            return (
+              <li className={getActiveClass(tag.id)} key={tag.id}>
+                <Tag tag={tag} tagCountData={tagCountData[tag.id] || 0} />
+              </li>
+            );
+          }
         })}
       </ul>
     </div>

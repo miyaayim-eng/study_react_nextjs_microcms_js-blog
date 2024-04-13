@@ -2,7 +2,7 @@ import styles from "./index.module.scss";
 import { getCategories } from "@/libs/microcms";
 import { Category } from "@/features/components/blog/Category";
 
-export const Categories = async ({ currentCategory }) => {
+export const Categories = async ({ currentCategory, currentPage }) => {
   // ブログカテゴリーを取得
   const categoriesResponse = await getCategories();
 
@@ -25,6 +25,7 @@ export const Categories = async ({ currentCategory }) => {
                 categoryId={category.id}
                 categoryName={category.name}
                 currentCategory={currentCategory}
+                currentPage={currentPage}
               />
             </li>
           );

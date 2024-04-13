@@ -19,6 +19,7 @@ export const ArticlesItem = ({ article }) => {
             height={article.thumbnail.height}
             width={article.thumbnail.width}
             className={styles.thumbnail__image}
+            priority
           />
         </p>
         <div className={styles.info}>
@@ -29,12 +30,17 @@ export const ArticlesItem = ({ article }) => {
           </h2>
 
           <p className={styles.category}>
-            <svg className={styles.category__icon}>
-              <use href="#svg-category" />
-            </svg>
-            <span className={styles.category__text}>
-              {article.category.name}
-            </span>
+            <Link
+              href={`/category/${article.category.id}`}
+              className={styles.category__link}
+            >
+              <svg className={styles.category__icon}>
+                <use href="#svg-category" />
+              </svg>
+              <span className={styles.category__text}>
+                {article.category.name}
+              </span>
+            </Link>
           </p>
           <ul className={styles.tags}>
             {article.tags.map((tag) => (

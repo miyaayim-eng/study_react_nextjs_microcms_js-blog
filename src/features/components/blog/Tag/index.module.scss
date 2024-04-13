@@ -29,5 +29,21 @@
 }
 
 .text {
+  display: flex;
+  align-items: center;
   margin-top: var(--text-minus-margin);
+}
+
+.count {
+  display: grid;
+  place-content: center;
+  min-width: 16px;
+  aspect-ratio: 1 / 1;
+  font-size: to-rem(14);
+  line-height: 1;
+  border-radius: 50%;
+  background-color: #eee;
+  border: 1px solid currentColor;
+  margin-left: 4px;
+  @include ff-en;
 }

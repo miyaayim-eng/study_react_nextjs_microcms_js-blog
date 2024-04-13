@@ -1,15 +1,23 @@
 @use "@global" as *;
 
 .sidebar {
-  padding: 8px 24px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 24px;
+}
+.sidebar__container {
+  padding: 24px 24px;
   border-radius: var(--border-radius);
   background-color: var(--color-bg_block);
   border: 1px solid var(--color-border);
   box-shadow: var(--box-shadow);
 }
 .sidebar__item {
-  padding-block: 24px;
+  &:not(:last-child) {
+    padding-bottom: 24px;
+  }
   &:not(:first-child) {
+    padding-top: 24px;
     border-top: 2px dashed var(--color-gray);
   }
 }

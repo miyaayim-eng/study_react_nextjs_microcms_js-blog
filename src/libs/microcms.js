@@ -106,6 +106,7 @@ export const getCategories = async (queries) => {
     return NextResponse.json({
       data: response.contents ?? null,
       error: null,
+      totalCount: response.totalCount,
     });
   } catch (error) {
     console.error("getCategoriesでエラーが発生しました", error);
