@@ -1,26 +1,35 @@
 @use "@global" as *;
 
 .profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 12px;
+  @include mq(lg) {
+    flex-direction: row;
+    align-items: normal;
+    column-gap: 32px;
+  }
+  @include mq(xxs) {
+    flex-direction: column;
+    align-items: center;
+  }
 }
-
 .box__image {
   width: 150px;
   border-radius: var(--border-radius);
   overflow: hidden;
-  margin-inline: auto;
 }
 .image {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
-
 .name {
   font-size: to-rem(14);
-  margin-top: 10px;
+  margin-top: 8px;
   text-align: center;
 }
 .text {
   font-size: to-rem(14);
-  margin-top: 20px;
 }

@@ -1,8 +1,6 @@
 import styles from "./page.module.scss";
 import { getArticlesList } from "@/libs/microcms";
 import { LIMIT } from "@/constants";
-import { Categories } from "@/features/components/blog/Categories";
-import { SidebarList } from "@/features/components/blog/sidebar/SidebarList";
 import { ArticlesList } from "@/features/components/blog/article/list/ArticlesList";
 import { ArticlesPagination } from "@/features/components/blog/article/list/ArticlesPagination";
 
@@ -14,12 +12,17 @@ export async function generateStaticParams() {
   // 取得しているデータがわかりやすいように、変数名を変更しています。
   const { totalCount: totalCount } = await articlesListResponse.json();
 
-  const range = (start, end) =>
-    [...Array(end - start + 1)].map((_, i) => start + i);
+  if (totalCount <= LIMIT) {
+    return []; // ページが1ページ以下の場合はパスを生成しない
+  }
 
-  const paths = range(2, Math.ceil(totalCount / LIMIT)).map((repo) => ({
-    current: repo.toString(),
-  }));
+  // ページ番号が2ページ目から開始するように配列を生成し、それをページパスに変換します
+  const paths = Array.from({ length: Math.ceil(totalCount / LIMIT) })
+    .map((_, i) => i + 1)
+    .slice(1) // 最初のページ (i.e., 1) を除外
+    .map((pageNumber) => ({
+      current: pageNumber.toString(),
+    }));
 
   // await console.log("paths => ", paths);
 
@@ -46,23 +49,11 @@ export default async function Page({ params }) {
     totalCount: totalCount,
   } = await articlesListResponse.json();
 
-  // 記事がない場合
-  if (!articles || articles.length === 0) {
-    return <h1>記事が0件でした。</h1>;
-  }
-
   return (
     <>
-      <Categories />
-      <div className={styles.container}>
-        <div>
-          <ArticlesList articles={articles} />
-          <ArticlesPagination
-            totalCount={totalCount}
-            currentPage={currentPage}
-          />
-        </div>
-        <SidebarList />
+      <div>
+        <ArticlesList articles={articles} />
+        <ArticlesPagination totalCount={totalCount} currentPage={currentPage} />
       </div>
     </>
   );

@@ -9,6 +9,9 @@
   color: var(--color-text_head);
   line-height: 1;
   margin-bottom: 24px;
+  @include mq(md) {
+    margin-bottom: 16px;
+  }
 
   &__icon {
     width: 1em;

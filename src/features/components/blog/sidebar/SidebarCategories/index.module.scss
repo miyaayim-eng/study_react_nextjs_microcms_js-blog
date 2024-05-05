@@ -3,53 +3,15 @@
 .category {
 }
 .list {
-  display: grid;
-  row-gap: 8px;
-}
-.item {
-  // border-top: 1px dashed currentColor;
-  &:last-child {
-    // border-bottom: 1px dashed currentColor;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  @include mq(lg) {
+    flex-direction: column;
+  }
+  @include mq(xxs) {
+    flex-direction: row;
   }
 }
-.link {
-  display: flex;
-  justify-content: space-between;
-  line-height: 1;
-  padding: 8px 16px;
-  // border-radius: var(--border-radius);
-  border-radius: 4px;
-  border: 1px solid currentColor;
-  transition: var(--transition_element);
-  transition-property: background-color;
-
-  @include hover {
-    background-color: var(--color-secondary);
-  }
-}
-.current {
-  background-color: var(--color-secondary);
-}
-.text {
-  display: flex;
-  align-items: center;
-}
-.count {
-  display: grid;
-  place-content: center;
-  min-width: 16px;
-  aspect-ratio: 1 / 1;
-  font-size: to-rem(14);
-  line-height: 1;
-  border-radius: 50%;
-  background-color: #eee;
-  border: 1px solid currentColor;
-  margin-left: 4px;
-  @include ff-en;
-}
-
-.icon {
-  // display: none;
-  width: 1em;
-  aspect-ratio: 1/1;
-}
+// .item {
+// }

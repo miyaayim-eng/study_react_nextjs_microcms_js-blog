@@ -1,6 +1,12 @@
 import parse from "html-react-parser";
-import "./contents.scss";
+import styles from "./index.module.scss";
 
 export const ArticleContents = ({ article }) => {
-  return <div className="content">{parse(article.content)}</div>;
+  return (
+    <div className={styles.contents}>
+      <div className={`${styles.richText} target-toc`}>
+        {parse(article.content)}
+      </div>
+    </div>
+  );
 };

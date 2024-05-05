@@ -1,7 +1,5 @@
 import styles from "./page.module.scss";
 import { LIMIT } from "@/constants";
-import { Categories } from "@/features/components/blog/Categories";
-import { SidebarList } from "@/features/components/blog/sidebar/SidebarList";
 import { getArticlesList } from "@/libs/microcms";
 import { ArticlesList } from "@/features/components/blog/article/list/ArticlesList";
 import { ArticlesPagination } from "@/features/components/blog/article/list/ArticlesPagination";
@@ -15,14 +13,20 @@ export async function generateStaticParams({ params }) {
   // 取得しているデータがわかりやすいように、変数名を変更しています。
   const { totalCount: totalCount } = await articlesListResponse.json();
 
-  const range = (start, end) =>
-    [...Array(end - start + 1)].map((_, i) => start + i);
+  if (totalCount <= LIMIT) {
+    return []; // ページが1ページ以下の場合はパスを生成しない
+  }
 
-  const paths = range(2, Math.ceil(totalCount / LIMIT)).map((repo) => ({
-    current: repo.toString(),
-  }));
+  // ページ番号が2ページ目から開始するように配列を生成し、それをページパスに変換します
+  const paths = Array.from({ length: Math.ceil(totalCount / LIMIT) })
+    .map((_, i) => i + 1)
+    .slice(1) // 最初のページ (i.e., 1) を除外
+    .map((pageNumber) => ({
+      current: pageNumber.toString(),
+    }));
 
   // await console.log("params => ", params);
+  // await console.log("params.categoryId => ", params.categoryId);
   // await console.log("paths => ", paths);
 
   // 作成したパスの配列を返します。
@@ -55,34 +59,17 @@ export default async function Page({ params }) {
     totalCount: totalCount,
   } = await articlesListResponse.json();
 
-  // ページの生成された時間を取得
-  // const time = new Date().toLocaleString();
-
   if (articlesListError != null) {
     return <div>記事リスト取得エラーが発生しました。</div>;
   }
 
   return (
     <>
-      <Categories currentCategory={currentCategory} currentPage={currentPage} />
-      <div className={styles.container}>
-        <div>
-          {
-            // 条件 ? trueの場合に実行する式 : falseの場合に実行する式
-            !articles || articles.length === 0 ? (
-              <h1>記事が0件でした。</h1>
-            ) : (
-              <ArticlesList articles={articles} />
-            )
-          }
-          <ArticlesPagination
-            totalCount={totalCount}
-            basePath={`/category/${currentCategory}`}
-            currentPage={currentPage}
-          />
-        </div>
-        <SidebarList
-          currentCategory={currentCategory}
+      <div>
+        <ArticlesList articles={articles} />
+        <ArticlesPagination
+          totalCount={totalCount}
+          basePath={`/category/${currentCategory}`}
           currentPage={currentPage}
         />
       </div>

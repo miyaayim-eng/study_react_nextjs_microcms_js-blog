@@ -84,20 +84,6 @@ export const Svg = () => {
         <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
       </symbol>
       <symbol
-        id="svg-arrow-right"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-        <path d="M5 12l14 0" />
-        <path d="M13 18l6 -6" />
-        <path d="M13 6l6 6" />
-      </symbol>
-      <symbol
         id="svg-chevron-right"
         viewBox="0 0 24 24"
         fill="none"
@@ -108,6 +94,18 @@ export const Svg = () => {
       >
         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
         <path d="M9 6l6 6l-6 6" />
+      </symbol>
+      <symbol
+        id="svg-chevron-left"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+        <path d="M15 6l-6 6l6 6" />
       </symbol>
       <symbol
         id="svg-pencil"

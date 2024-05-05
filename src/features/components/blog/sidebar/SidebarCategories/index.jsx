@@ -1,6 +1,6 @@
-import Link from "next/link";
 import styles from "./index.module.scss";
 import { getCategories } from "@/libs/microcms";
+import { Category } from "@/features/components/blog/Category";
 import { getCategoryReferencedCount } from "@/libs/getCategoryReferencedCount";
 
 export const SidebarCategories = async ({ currentCategory, currentPage }) => {
@@ -9,7 +9,8 @@ export const SidebarCategories = async ({ currentCategory, currentPage }) => {
   // console.log("categoryCountData => ", categoryCountData);
 
   // ブログカテゴリーを取得
-  const categoriesResponse = await getCategories();
+  const queries = { fields: "id,name" };
+  const categoriesResponse = await getCategories(queries);
   // console.log("categoriesResponse => ", categoriesResponse);
 
   // 取得しているデータがわかりやすいように、変数名を変更しています。
@@ -25,11 +26,11 @@ export const SidebarCategories = async ({ currentCategory, currentPage }) => {
     return <div>カテゴリ取得エラーが発生しました。</div>;
   }
 
-  // "current" というクラス名を条件に応じて付与するための関数
-  const getCurrentClass = (categoryId) => {
+  // 生成するカテゴリーがカレントであるかを判別するための関数
+  const isCurrentCategory = (categoryId) => {
     // paramsがundefinedの場合や、params.categoryIdがundefinedの場合に備える
     const isCurrent = categoryId === currentCategory;
-    return isCurrent ? `${styles.link} ${styles.current}` : styles.link;
+    return isCurrent;
   };
 
   return (
@@ -37,36 +38,13 @@ export const SidebarCategories = async ({ currentCategory, currentPage }) => {
       <ul className={styles.list}>
         {categories.map((category) => {
           if (categoryCountData[category.id]) {
-            return currentCategory !== category.id || currentPage ? (
-              <li className={styles.item} key={category.id}>
-                <Link
-                  href={`/category/${category.id}`}
-                  className={getCurrentClass(category.id)}
-                >
-                  <span className={styles.text}>
-                    <span className={styles.name}>{category.name}</span>
-                    <span className={styles.count}>
-                      {categoryCountData[category.id] || 0}
-                    </span>
-                  </span>
-                  <svg className={styles.icon}>
-                    <use href="#svg-chevron-right" />
-                  </svg>
-                </Link>
-              </li>
-            ) : (
-              <li className={styles.item} key={category.id}>
-                <span className={`${styles.link} ${styles.current}`}>
-                  <span className={styles.text}>
-                    <span className={styles.name}>{category.name}</span>
-                    <span className={styles.count}>
-                      {categoryCountData[category.id] || 0}
-                    </span>
-                  </span>
-                  <svg className={styles.icon}>
-                    <use href="#svg-chevron-right" />
-                  </svg>
-                </span>
+            return (
+              <li key={category.id}>
+                <Category
+                  category={category}
+                  categoryCountData={categoryCountData[category.id] || 0}
+                  isCurrent={isCurrentCategory(category.id)}
+                />
               </li>
             );
           }

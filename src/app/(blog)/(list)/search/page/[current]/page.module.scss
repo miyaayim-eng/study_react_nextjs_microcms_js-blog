@@ -1,5 +1,28 @@
 @use "@global" as *;
 
+.intro {
+  margin-bottom: var(--contents_margin_vertical);
+
+  &__group {
+    width: fit-content;
+    margin: 0 auto 16px;
+    font-size: to-rem(40);
+    font-weight: 700;
+    line-height: 1;
+  }
+  &__text {
+    width: fit-content;
+    margin: 0 auto;
+    font-size: to-rem(16);
+    font-weight: inherit;
+
+    &__search {
+      font-size: to-rem(20);
+      font-weight: 700;
+    }
+  }
+}
+
 .container {
   display: grid;
   grid-template-columns: 1fr 280px;

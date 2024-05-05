@@ -1,10 +1,70 @@
 @use "@global" as *;
 
 .header {
+  position: relative;
+  z-index: 2;
   display: flex;
-  gap: 50px;
-  min-height: 50px;
+  justify-content: space-between;
+  min-height: var(--header-height);
   width: 100%;
-  border-bottom: 1px solid var(--color-border);
   background-color: var(--color-bg_header);
+  box-shadow: var(--box-shadow_block);
+}
+
+.logo {
+  &__link {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding: 0 24px;
+    border-radius: 0 0 8px 8px;
+    // background-color: var(--color-bg_header);
+    // box-shadow: var(--box-shadow_block);
+  }
+  &__text {
+    font-size: to-rem(24);
+    font-weight: 700;
+    line-height: 1;
+  }
+}
+
+.menu {
+  padding-right: 16px;
+  @include mq(md) {
+    display: none;
+  }
+  &__nav {
+    height: 100%;
+    border-radius: 0 0 8px 8px;
+  }
+  &__list {
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
+  &__item {
+    height: 100%;
+  }
+  &__link {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    column-gap: 0.2em;
+    font-size: to-rem(16);
+    font-weight: 700;
+    padding: 0 24px;
+    line-height: 1;
+    transition: var(--transition_element);
+
+    @include hover {
+      color: var(--color-accent);
+    }
+  }
+  &__icon {
+    width: 1em;
+    aspect-ratio: 1/1;
+  }
+  &__name {
+    margin-top: var(--text-minus-margin);
+  }
 }

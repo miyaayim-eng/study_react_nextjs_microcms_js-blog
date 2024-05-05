@@ -1,8 +1,15 @@
 @use "@global" as *;
 
 .footer {
-  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50px;
   width: 100%;
   border-top: 1px solid var(--color-border);
   background-color: var(--color-bg_footer);
+}
+
+.copyright {
+  font-size: to-rem(12);
 }

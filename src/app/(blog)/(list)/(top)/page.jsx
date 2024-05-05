@@ -1,8 +1,6 @@
 import styles from "./page.module.scss";
 import { getArticlesList } from "@/libs/microcms";
 import { LIMIT } from "@/constants";
-import { Categories } from "@/features/components/blog/Categories";
-import { SidebarList } from "@/features/components/blog/sidebar/SidebarList";
 import { ArticlesList } from "@/features/components/blog/article/list/ArticlesList";
 import { ArticlesPagination } from "@/features/components/blog/article/list/ArticlesPagination";
 
@@ -28,20 +26,21 @@ export default async function Page() {
   //   return <div>記事リスト取得エラーが発生しました。</div>;
   // }
 
-  // 記事がない場合
-  if (!articles || articles.length === 0) {
-    return <h1>記事が0件でした。</h1>;
-  }
-
   return (
     <>
-      <Categories />
-      <div className={styles.container}>
-        <div>
-          <ArticlesList articles={articles} />
-          <ArticlesPagination totalCount={totalCount} />
-        </div>
-        <SidebarList />
+      <div>
+        {!articles || articles.length === 0 ? (
+          <div className={styles.notItem}>
+            <p className={styles.notItem__text}>
+              該当する記事は見つかりませんでした。
+            </p>
+          </div>
+        ) : (
+          <>
+            <ArticlesList articles={articles} />
+            <ArticlesPagination totalCount={totalCount} />
+          </>
+        )}
       </div>
     </>
   );

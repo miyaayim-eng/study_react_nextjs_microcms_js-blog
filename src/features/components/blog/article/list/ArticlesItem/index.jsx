@@ -10,7 +10,6 @@ export const ArticlesItem = ({ article }) => {
   // console.log(article.tags);
   return (
     <li className={styles.item}>
-      {/* <Link href={`/articles/${article.id}`} className={styles.link}> */}
       <div className={styles.container}>
         <p className={styles.thumbnail}>
           <Image
@@ -37,25 +36,28 @@ export const ArticlesItem = ({ article }) => {
               <svg className={styles.category__icon}>
                 <use href="#svg-category" />
               </svg>
-              <span className={styles.category__text}>
+              <span className={styles.category__name}>
                 {article.category.name}
               </span>
             </Link>
           </p>
-          <ul className={styles.tags}>
-            {article.tags.map((tag) => (
-              <li className={styles.tag} key={tag.id}>
-                <Tag tag={tag} />
-              </li>
-            ))}
-          </ul>
+          {article.tags.length > 0 && (
+            <ul className={styles.tags}>
+              {article.tags.map((tag) => (
+                <li className={styles.tag} key={tag.id}>
+                  <Tag tag={tag} />
+                </li>
+              ))}
+            </ul>
+          )}
           <div className={styles.dates}>
             <DateCreated article={article} />
-            <DateRevised article={article} />
+            {article.createdAt !== article.updatedAt && (
+              <DateRevised article={article} />
+            )}
           </div>
         </div>
       </div>
-      {/* </Link> */}
     </li>
   );
 };

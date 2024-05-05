@@ -1,7 +1,6 @@
 import styles from "./page.module.scss";
 import { getArticlesList } from "@/libs/microcms";
 import { LIMIT } from "@/constants";
-import { Categories } from "@/features/components/blog/Categories";
 import { SidebarList } from "@/features/components/blog/sidebar/SidebarList";
 import { ArticlesList } from "@/features/components/blog/article/list/ArticlesList";
 import { ArticlesPagination } from "@/features/components/blog/article/list/ArticlesPagination";
@@ -30,14 +29,17 @@ export default async function Page({ params, searchParams }) {
     totalCount: totalCount,
   } = await articlesListResponse.json();
 
-  // 記事がない場合
-  if (!articles || articles.length === 0) {
-    return <h1>記事が0件でした。</h1>;
-  }
-
   return (
     <>
-      <Categories />
+      <div className={styles.intro}>
+        <p className={styles.intro__group}>記事検索</p>
+        <h1 className={styles.intro__text}>
+          <span className={styles.intro__text__search}>
+            「{searchKeyword}」
+          </span>
+          <span>の検索結果</span>
+        </h1>
+      </div>
       <div className={styles.container}>
         <div>
           <ArticlesList articles={articles} />

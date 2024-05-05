@@ -13,7 +13,16 @@ export const ArticlesPagination = ({
 
   // 表示するページ番号のリストを計算
   let pagesToShow;
-  if (currentPage <= 4) {
+  // console.log("totalCount => ", totalCount);
+  // console.log("totalPages => ", totalPages);
+
+  if (totalPages <= 7) {
+    // すべて表示
+    pagesToShow = Array.from(
+      { length: Math.min(totalCount, totalPages) },
+      (_, i) => i + 1
+    );
+  } else if (currentPage <= 4) {
     // 1ページ目から4ページ目の場合、先頭から5ページを表示
     pagesToShow = Array.from(
       { length: Math.min(5, totalPages) },
@@ -55,7 +64,7 @@ export const ArticlesPagination = ({
     <>
       <ul className={styles.list}>
         {/* 先頭のページと省略記号の表示 */}
-        {currentPage > 4 && (
+        {currentPage > 4 && totalPages > 7 && (
           <>
             <li className={styles.item}>
               <Link href={generatePagePath(1)} className={styles.link}>
@@ -82,7 +91,7 @@ export const ArticlesPagination = ({
         ))}
 
         {/* 末尾の省略記号と最終ページ */}
-        {currentPage < totalPages - 3 && totalPages > 5 && (
+        {currentPage < totalPages - 3 && totalPages > 7 && (
           <>
             <li className={styles.item}>
               <span className={styles.link}>...</span>

@@ -3,31 +3,47 @@
 .link {
   display: flex;
   align-items: center;
-  column-gap: 4px;
-  padding: 5px 10px;
-  // border-radius: var(--border-radius);
+  line-height: 1;
+  padding: 8px 8px;
+  background-color: var(--color-bg_element);
   border-radius: 4px;
-  border: 1px solid var(--color-border);
-  background-color: var(--color-white);
-  box-shadow: var(--box-shadow);
   transition: var(--transition_element);
-  transition-property: color, background-color;
+  box-shadow: var(--box-shadow_element);
+  outline: 1px solid transparent;
 
   @include hover {
-    // color: var(--color-white);
-    background-color: var(--color-secondary);
+    color: var(--color-accent);
+    outline: 1px solid var(--color-accent);
   }
 }
 
 .current {
-  color: var(--color-white);
-  background-color: var(--color-text);
+  color: var(--color-text_active);
+  background-color: var(--color-bg_active);
 }
 
 .icon {
-  width: 1rem;
+  width: 1em;
   aspect-ratio: 1/1;
+  margin-right: 4px;
 }
-.text {
+.name {
   margin-top: var(--text-minus-margin);
+  &:not(:last-child) {
+    margin-right: 16px;
+  }
+}
+.count {
+  display: grid;
+  place-content: center;
+  min-width: 16px;
+  aspect-ratio: 1 / 1;
+  font-size: to-rem(12);
+  line-height: 1;
+  border-radius: 50%;
+  border-radius: 4px;
+  border: 1px solid currentColor;
+  // margin-left: 16px;
+  margin-left: auto;
+  @include ff-en;
 }

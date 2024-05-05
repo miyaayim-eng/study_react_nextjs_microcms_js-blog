@@ -14,19 +14,23 @@ export const SidebarList = ({ currentCategory, currentTag, currentPage }) => {
         </Suspense>
       </div>
       <div className={styles.sidebar__container}>
-        <p className={styles.sidebar__title}>
-          <svg
-            className={`${styles.sidebar__title__icon} ${styles.sidebar__title__icon__user}`}
-          >
-            <use href="#svg-user" />
-          </svg>
-          <span className={styles.sidebar__title__txt}>Profile</span>
-        </p>
-        <SidebarProfile />
+        <div className={`${styles.sidebar__item} ${styles.sidebar__profile}`}>
+          <p className={styles.sidebar__title}>
+            <svg
+              className={`${styles.sidebar__title__icon} ${styles.sidebar__title__icon__user}`}
+            >
+              <use href="#svg-user" />
+            </svg>
+            <span className={styles.sidebar__title__txt}>Profile</span>
+          </p>
+          <SidebarProfile />
+        </div>
       </div>
 
       <div className={styles.sidebar__container}>
-        <div className={styles.sidebar__item}>
+        <div
+          className={`${styles.sidebar__item} ${styles.sidebar__categories}`}
+        >
           <p className={styles.sidebar__title}>
             <svg
               className={`${styles.sidebar__title__icon} ${styles.sidebar__title__icon__category}`}
@@ -40,7 +44,7 @@ export const SidebarList = ({ currentCategory, currentTag, currentPage }) => {
             currentPage={currentPage}
           />
         </div>
-        <div className={styles.sidebar__item}>
+        <div className={`${styles.sidebar__item} ${styles.sidebar__tags}`}>
           <p className={styles.sidebar__title}>
             <svg
               className={`${styles.sidebar__title__icon} ${styles.sidebar__title__icon__tag}`}

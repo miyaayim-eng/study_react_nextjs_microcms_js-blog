@@ -1,20 +1,22 @@
 @use "@global" as *;
 
 .search {
-  background-color: #fff;
-  border: 1px solid var(--color-border);
+  background-color: var(--color-bg_search);
   border-radius: var(--border-radius);
-  box-shadow: var(--box-shadow);
+  box-shadow: var(--box-shadow_block);
+  color: var(--color-text_search);
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  transition: var(--transition_element);
   width: 100%;
   padding: 8px;
   font-size: to-rem(16);
   display: flex;
-  align-items: center;
+  // align-items: center;
   cursor: text;
 
   &:focus-within {
-    box-shadow: 0 0 0 1px var(--color-primary);
-    border-color: var(--color-primary);
+    outline-color: var(--color-accent);
   }
 }
 .icon__search {
@@ -29,6 +31,10 @@
 
 .input {
   flex: 1;
+
+  &::placeholder {
+    color: var(--color-text_search);
+  }
 
   // FireFox用
   &:focus {
@@ -53,7 +59,7 @@
 
 .clear {
   display: none;
-  padding-inline: 8px;
+  padding: 0 8px;
   margin-right: -8px;
 }
 .visible {
