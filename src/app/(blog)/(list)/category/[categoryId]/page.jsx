@@ -3,6 +3,7 @@ import { getArticlesList } from "@/libs/microcms";
 import { LIMIT } from "@/constants";
 import { ArticlesList } from "@/features/components/blog/article/list/ArticlesList";
 import { ArticlesPagination } from "@/features/components/blog/article/list/ArticlesPagination";
+import { notFound } from "next/navigation";
 
 export default async function Page({ params }) {
   // URLから現在のページIDを取得
@@ -14,18 +15,13 @@ export default async function Page({ params }) {
   // ブログ一覧を取得
   const filters = `category[equals]${params.categoryId}`;
   const queries = { limit: LIMIT, filters: filters };
-  const articlesListResponse = await getArticlesList(queries);
+  const articlesListResponse = await getArticlesList(queries).catch(() =>
+    notFound()
+  );
 
   // 取得しているデータがわかりやすいように、変数名を変更しています。
-  const {
-    data: articles,
-    error: articlesListError,
-    totalCount: totalCount,
-  } = await articlesListResponse.json();
-
-  if (articlesListError != null) {
-    return <div>記事リスト取得エラーが発生しました。</div>;
-  }
+  const { data: articles, totalCount: totalCount } =
+    await articlesListResponse.json();
 
   return (
     <>

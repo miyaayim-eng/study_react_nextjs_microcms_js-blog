@@ -13,12 +13,8 @@ export const SidebarTags = async ({ currentTag, currentPage }) => {
   const tagsResponse = await getTags(queries);
 
   // 取得しているデータがわかりやすいように、変数名を変更しています。
-  const { data: tags, error: tagsError } = await tagsResponse.json();
+  const { data: tags } = await tagsResponse.json();
   // console.log("tags => ", tags);
-
-  if (tagsError != null) {
-    return <div>タグ取得エラーが発生しました。</div>;
-  }
 
   // 生成するカテゴリーがカレントであるかを判別するための関数
   const isCurrentTag = (tagId) => {

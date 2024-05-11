@@ -19,8 +19,7 @@ export async function generateStaticParams() {
   const categoriesResponse = await getCategories(queries);
 
   // 取得しているデータがわかりやすいように、変数名を変更しています。
-  const { data: categories, error: categoriesError } =
-    await categoriesResponse.json();
+  const { data: categories } = await categoriesResponse.json();
   // console.log("categories => ", categories);
 
   const paths = categories.map((category) => {

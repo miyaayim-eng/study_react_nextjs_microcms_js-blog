@@ -1,6 +1,6 @@
+import Link from "next/link";
 import styles from "./not-found.module.scss";
 import utility from "@sass/utility/utility.module.scss";
-import Link from "next/link";
 
 export const metadata = {
   title: "ご指定のページが見つかりませんでした",

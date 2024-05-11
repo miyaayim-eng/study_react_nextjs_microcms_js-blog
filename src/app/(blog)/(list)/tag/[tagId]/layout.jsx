@@ -19,7 +19,7 @@ export async function generateStaticParams() {
   const tagsResponse = await getTags(queries);
 
   // 取得しているデータがわかりやすいように、変数名を変更しています。
-  const { data: tags, error: tagsError } = await tagsResponse.json();
+  const { data: tags } = await tagsResponse.json();
   // console.log("tags => ", tags);
 
   const paths = tags.map((tag) => {

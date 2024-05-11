@@ -1,8 +1,5 @@
 import styles from "./page.module.scss";
 import Link from "next/link";
-import { notFound } from "next/navigation";
-// リッチディタで作成したコンテンツ部分をHTMLパースするためのモジュール
-import utility from "@sass//utility/utility.module.scss";
 import { getArticlesList, getArticlesDetail } from "@/libs/microcms";
 import { SidebarList } from "@/features/components/blog/sidebar/SidebarList";
 import { ArticleInfo } from "@/features/components/blog/article/detail/ArticleInfo";
@@ -33,8 +30,7 @@ export async function generateStaticParams() {
   const articlesListResponse = await getArticlesList();
 
   // 取得しているデータがわかりやすいように、変数名を変更しています。
-  const { data: articles, error: articlesListError } =
-    await articlesListResponse.json();
+  const { data: articles } = await articlesListResponse.json();
 
   // 取得したブログ一覧から、各ブログのIDを使用して
   // ページ生成に必要なパラメータオブジェクトの配列を作成します
@@ -57,13 +53,7 @@ export default async function Page({ params }) {
   // URLパラメータのIDを参照して、ブログの詳細を取得
   // await console.log("params => ", params);
   const articlesDetailResponse = await getArticlesDetail(params.slug);
-  const { data: article, error: articlesDetailError } =
-    await articlesDetailResponse.json();
-
-  // 記事がない場合は'404 Not Found'を表示
-  if (!article) {
-    notFound();
-  }
+  const { data: article } = await articlesDetailResponse.json();
 
   return (
     <>

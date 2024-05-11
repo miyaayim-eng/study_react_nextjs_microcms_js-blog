@@ -9,7 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "cheerio": "^1.0.0-rc.12",
     "dayjs": "^1.11.10",
     "html-react-parser": "^5.1.8",
     "microcms-js-sdk": "^3.0.0",

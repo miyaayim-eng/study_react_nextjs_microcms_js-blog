@@ -14,17 +14,10 @@ export const SidebarCategories = async ({ currentCategory, currentPage }) => {
   // console.log("categoriesResponse => ", categoriesResponse);
 
   // 取得しているデータがわかりやすいように、変数名を変更しています。
-  const {
-    data: categories,
-    error: categoriesError,
-    totalCount: totalCount,
-  } = await categoriesResponse.json();
+  const { data: categories, totalCount: totalCount } =
+    await categoriesResponse.json();
   // console.log("categories => ", categories);
   // console.log("totalCount => ", totalCount);
-
-  if (categoriesError != null) {
-    return <div>カテゴリ取得エラーが発生しました。</div>;
-  }
 
   // 生成するカテゴリーがカレントであるかを判別するための関数
   const isCurrentCategory = (categoryId) => {

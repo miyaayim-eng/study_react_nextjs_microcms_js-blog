@@ -15,15 +15,8 @@ export default async function Page({ params }) {
   // console.log("currentTag => ", currentTag);
 
   // 取得しているデータがわかりやすいように、変数名を変更しています。
-  const {
-    data: articles,
-    error: articlesListError,
-    totalCount: totalCount,
-  } = await articlesListResponse.json();
-
-  if (articlesListError != null) {
-    return <div>記事リスト取得エラーが発生しました。</div>;
-  }
+  const { data: articles, totalCount: totalCount } =
+    await articlesListResponse.json();
 
   return (
     <>

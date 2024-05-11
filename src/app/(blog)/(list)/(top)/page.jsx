@@ -10,21 +10,14 @@ export default async function Page() {
   const articlesListResponse = await getArticlesList(queries);
 
   // 取得しているデータがわかりやすいように、変数名を変更しています。
-  const {
-    data: articles,
-    error: articlesListError,
-    totalCount: totalCount,
-  } = await articlesListResponse.json();
+  const { data: articles, totalCount: totalCount } =
+    await articlesListResponse.json();
 
   // この時点の'data'の中身は、
   // [{id:(...), title:(...), content:(...)},{id:(...), title:(...), content:(...)}]
   // といった感じ。
   // console.log("articles => ", articles);
   // console.log("totalCount => ", totalCount);
-
-  // if (articlesListError != null) {
-  //   return <div>記事リスト取得エラーが発生しました。</div>;
-  // }
 
   return (
     <>

@@ -10,8 +10,7 @@ export const Header = async () => {
   const categoriesResponse = await getCategories(queries);
 
   // 取得しているデータがわかりやすいように、変数名を変更しています。
-  const { data: categories, error: categoriesError } =
-    await categoriesResponse.json();
+  const { data: categories } = await categoriesResponse.json();
 
   return (
     <>

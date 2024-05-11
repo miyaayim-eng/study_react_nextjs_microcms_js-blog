@@ -22,11 +22,8 @@ export default async function Page({ searchParams }) {
   const articlesListResponse = await getArticlesList(queries);
 
   // 取得しているデータがわかりやすいように、変数名を変更しています。
-  const {
-    data: articles,
-    error: articlesListError,
-    totalCount: totalCount,
-  } = await articlesListResponse.json();
+  const { data: articles, totalCount: totalCount } =
+    await articlesListResponse.json();
 
   return (
     <>

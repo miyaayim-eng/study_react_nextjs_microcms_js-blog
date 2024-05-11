@@ -1,3 +1,4 @@
+import { notFound } from "next/navigation";
 import styles from "./page.module.scss";
 import { getArticlesList } from "@/libs/microcms";
 import { LIMIT } from "@/constants";
@@ -43,11 +44,12 @@ export default async function Page({ params }) {
   // console.log('currentCategory => ', currentCategory);
 
   // 取得しているデータがわかりやすいように、変数名を変更しています。
-  const {
-    data: articles,
-    error: articlesListError,
-    totalCount: totalCount,
-  } = await articlesListResponse.json();
+  const { data: articles, totalCount: totalCount } =
+    await articlesListResponse.json();
+
+  if (articles.length === 0) {
+    notFound();
+  }
 
   return (
     <>

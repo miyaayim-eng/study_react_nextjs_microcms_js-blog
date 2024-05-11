@@ -4,11 +4,9 @@ import { notFound } from "next/navigation";
 
 // '.env.local'ファイルにmicroCMSの'サービスドメイン'、'APIキー'が無い場合はエラーメッセージを表示
 if (!process.env.MICROCMS_SERVICE_DOMAIN) {
-  // throw new Error("MICROCMS_SERVICE_DOMAIN is required");
   throw new Error("MICROCMS_SERVICE_DOMAIN が設定されていません。");
 }
 if (!process.env.MICROCMS_API_KEY) {
-  // throw new Error("MICROCMS_API_KEY is required");
   throw new Error("API_KEY が設定されていません。");
 }
 
@@ -47,11 +45,8 @@ export const getArticlesList = async (queries) => {
       totalCount: response.totalCount,
     });
   } catch (error) {
-    console.error("getArticlesListでエラーが発生しました", error);
-    return NextResponse.json({
-      data: null,
-      error: error.message,
-    });
+    console.error("getArticlesListでエラーが発生しました => ", error);
+    notFound();
   }
 };
 
@@ -79,7 +74,7 @@ export const getArticlesDetail = async (contentId, queries) => {
       error: null,
     });
   } catch (error) {
-    console.error("getArticlesDetailでエラーが発生しました", error);
+    console.error("getArticlesDetailでエラーが発生しました => ", error);
     notFound();
   }
 };
@@ -110,10 +105,7 @@ export const getCategories = async (queries) => {
     });
   } catch (error) {
     console.error("getCategoriesでエラーが発生しました", error);
-    return NextResponse.json({
-      data: null,
-      error: error.message,
-    });
+    notFound();
   }
 };
 
@@ -130,10 +122,7 @@ export const getTags = async (queries) => {
       error: null,
     });
   } catch (error) {
-    console.error("getTagsでエラーが発生しました", error);
-    return NextResponse.json({
-      data: null,
-      error: error.message,
-    });
+    console.error("getTagsでエラーが発生しました => ", error);
+    notFound();
   }
 };
