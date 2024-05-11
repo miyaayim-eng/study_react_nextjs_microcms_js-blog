@@ -1,6 +1,9 @@
 @use "@global" as *;
 
 .footer {
+  position: sticky;
+  top: 100dvh;
+  bottom: 0;
   display: flex;
   justify-content: center;
   align-items: center;

@@ -1,0 +1,61 @@
+@use "@global" as *;
+
+.inner {
+  padding-block: var(--contents_margin_vertical);
+}
+
+.title {
+  text-align: center;
+  &__jp {
+    display: block;
+    font-size: to-rem(32);
+    font-weight: 700;
+    @include mq(md) {
+      font-size: to-rem(24);
+    }
+  }
+}
+
+.body {
+  font-size: to-rem(16);
+  inline-size: fit-content;
+  margin-inline: auto;
+  margin-top: 64px;
+}
+.back {
+  inline-size: fit-content;
+  margin-inline: auto;
+  margin-top: 64px;
+
+  &__link {
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    column-gap: 16px;
+    transition: var(--transition_element);
+
+    @include hover {
+      color: var(--color-accent);
+    }
+  }
+  &__iconWrap {
+    width: 40px;
+    aspect-ratio: 1/1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    background-color: var(--color-bg_block);
+    outline: 1px solid transparent;
+    transition: var(--transition_element);
+
+    @include hover-child {
+      outline-color: var(--color-accent);
+    }
+  }
+
+  &__icon {
+    width: 50%;
+    aspect-ratio: 1/1;
+  }
+}
