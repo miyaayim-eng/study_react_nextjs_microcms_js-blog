@@ -1,6 +1,16 @@
 import styles from "./layout.module.scss";
 import { getCategories } from "@/libs/microcms";
+import { fetchCategoryName } from "@/libs/fetchCategoryName";
 import { SidebarList } from "@/features/components/blog/sidebar/SidebarList";
+
+export async function generateMetadata({ params }) {
+  const currentCategoryName = await fetchCategoryName(params.categoryId);
+
+  return {
+    title: `${currentCategoryName} [カテゴリー]`,
+    description: `${currentCategoryName}に関する記事一覧です。`,
+  };
+}
 
 // カテゴリページの静的パスを作成
 export async function generateStaticParams() {
@@ -25,18 +35,8 @@ export async function generateStaticParams() {
 }
 
 export default async function CategoryLayout({ children, params }) {
-  // URLから現在のページIDを取得
+  const currentCategoryName = await fetchCategoryName(params.categoryId);
   const currentCategory = params.categoryId;
-
-  // ブログカテゴリーを取得
-  const filters = `id[equals]${currentCategory}`;
-  const queries = { fields: "name", filters: filters };
-  const categoriesResponse = await getCategories(queries);
-
-  // 取得しているデータがわかりやすいように、変数名を変更しています。
-  const { data: categories, error: categoriesError } =
-    await categoriesResponse.json();
-  // console.log("categories => ", categories);
 
   return (
     <>
@@ -46,7 +46,7 @@ export default async function CategoryLayout({ children, params }) {
           <svg className={styles.category__icon}>
             <use href="#svg-category" />
           </svg>
-          <span className={styles.category__name}>{categories[0].name}</span>
+          <span className={styles.category__name}>{currentCategoryName}</span>
         </h1>
       </div>
       <div className={styles.container}>

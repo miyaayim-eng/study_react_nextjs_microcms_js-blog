@@ -5,6 +5,14 @@ import { SidebarList } from "@/features/components/blog/sidebar/SidebarList";
 import { ArticlesList } from "@/features/components/blog/article/list/ArticlesList";
 import { ArticlesPagination } from "@/features/components/blog/article/list/ArticlesPagination";
 
+export async function generateMetadata({ searchParams }) {
+  const searchKeyword = searchParams.q;
+  return {
+    title: `${searchKeyword} [検索]`,
+    description: `${searchKeyword}に関する記事検索結果一覧です。`,
+  };
+}
+
 export default async function Page({ searchParams }) {
   // URLから現在の検索キーワードを取得
   const searchKeyword = searchParams.q;

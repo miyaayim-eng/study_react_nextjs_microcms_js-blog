@@ -9,6 +9,18 @@ import { ArticleInfo } from "@/features/components/blog/article/detail/ArticleIn
 import { ArticleContents } from "@/features/components/blog/article/detail/ArticleContents";
 import { ArticleToc } from "@/features/components/blog/article/detail/ArticleToc";
 
+export async function generateMetadata({ params }) {
+  const queries = { fields: "title,description" };
+  const articlesDetailResponse = await getArticlesDetail(params.slug, queries);
+  const { data: article } = await articlesDetailResponse.json();
+
+  return {
+    title: article.title,
+    // 概要がなければdescriptionに記事タイトルを代入
+    description: article.description ? article.description : article.title,
+  };
+}
+
 // この関数は、静的サイト生成（SSG）のために、ビルド時に事前生成すべき
 // ページのパスを動的に生成します。具体的には、microCMSから取得した
 // ブログの一覧データに基づき、各ブログポストに対応するパスを含む
@@ -44,13 +56,9 @@ export async function generateStaticParams() {
 export default async function Page({ params }) {
   // URLパラメータのIDを参照して、ブログの詳細を取得
   // await console.log("params => ", params);
-  const { slug } = params;
-  const articlesDetailResponse = await getArticlesDetail(slug);
+  const articlesDetailResponse = await getArticlesDetail(params.slug);
   const { data: article, error: articlesDetailError } =
     await articlesDetailResponse.json();
-
-  // ページの生成された時間を取得
-  const time = new Date().toLocaleString();
 
   // 記事がない場合は'404 Not Found'を表示
   if (!article) {

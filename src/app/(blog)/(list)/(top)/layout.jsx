@@ -5,7 +5,7 @@ export default async function Layout({ children }) {
   return (
     <>
       <div className={styles.intro}>
-        <h1 className={styles.intro__head}>サイトタイトル</h1>
+        <h1 className={styles.intro__head}>みやがめボックス</h1>
         <p className={styles.intro__desc}>
           Web制作の技術記事や、趣味・日常のことについて不定期で更新しています。
         </p>

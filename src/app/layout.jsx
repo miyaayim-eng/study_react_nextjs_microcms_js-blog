@@ -9,10 +9,11 @@ import { Footer } from "@/components/layouts/Footer";
 // 共通のmetaタグ
 export const metadata = {
   title: {
-    default: "サイトタイトル",
-    template: `%s | サイトタイトル`,
+    default: "みやがめボックス",
+    template: `%s | みやがめボックス`,
   },
-  description: "Next.jsで作成練習です。",
+  description:
+    "主にWeb制作についての技術記事を掲載しているブログサイトです。HTML、CSS、JavaScript、React、Next.jsなど、フロントエンドに関わる技術を学んでいます。",
   // openGraph: {
   //   title: {
   //     default: "サイトタイトル",
@@ -23,8 +24,6 @@ export const metadata = {
   // twitter: {
   //   card: "summary_large_image",
   // },
-  // title: "Next.jsで作成練習",
-  // description: "Next.jsで作成練習です。",
 };
 
 // 共通の見た目

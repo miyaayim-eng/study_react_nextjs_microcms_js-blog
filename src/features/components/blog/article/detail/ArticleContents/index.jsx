@@ -5,7 +5,7 @@ export const ArticleContents = ({ article }) => {
   return (
     <div className={styles.contents}>
       <div className={`${styles.richText} target-toc`}>
-        {parse(article.content)}
+        {parse(article.body)}
       </div>
     </div>
   );

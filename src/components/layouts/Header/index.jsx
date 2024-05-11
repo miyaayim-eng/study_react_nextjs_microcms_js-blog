@@ -18,7 +18,7 @@ export const Header = async () => {
       <header className={styles.header}>
         <p className={styles.logo}>
           <Link href="/" className={styles.logo__link}>
-            <span className={styles.logo__text}>サイトタイトル</span>
+            <span className={styles.logo__text}>みやがめボックス</span>
           </Link>
         </p>
         <div className={styles.menu}>

@@ -1,6 +1,16 @@
 import styles from "./layout.module.scss";
 import { getTags } from "@/libs/microcms";
 import { SidebarList } from "@/features/components/blog/sidebar/SidebarList";
+import { fetchTagName } from "@/libs/fetchTagName";
+
+export async function generateMetadata({ params }) {
+  const currentTagName = await fetchTagName(params.tagId);
+
+  return {
+    title: `${currentTagName} [タグ]`,
+    description: `${currentTagName}に関する記事一覧です。`,
+  };
+}
 
 // カテゴリページの静的パスを作成
 export async function generateStaticParams() {
@@ -24,19 +34,8 @@ export async function generateStaticParams() {
 }
 
 export default async function tagLayout({ children, params }) {
-  // URLから現在のページIDを取得
   const currentTag = params.tagId;
-
-  // ブログカテゴリーを取得
-  const filters = `id[equals]${currentTag}`;
-  const queries = { fields: "name", filters: filters };
-  const tagsResponse = await getTags(queries);
-
-  // 取得しているデータがわかりやすいように、変数名を変更しています。
-  const { data: tags, error: tagsError } = await tagsResponse.json();
-  // console.log("tags => ", tags);
-  // console.log("params => ", params);
-  // console.log("currentTag => ", currentTag);
+  const currentTagName = await fetchTagName(params.tagId);
 
   return (
     <>
@@ -44,7 +43,7 @@ export default async function tagLayout({ children, params }) {
         <p className={styles.intro__group}>カテゴリー</p>
         <h1 className={styles.tag}>
           <span className={styles.tag__hashtag}>#</span>
-          <span className={styles.tag__name}>{tags[0].name}</span>
+          <span className={styles.tag__name}>{currentTagName}</span>
         </h1>
       </div>
       <div className={styles.container}>
