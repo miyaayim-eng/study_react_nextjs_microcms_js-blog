@@ -26,21 +26,13 @@ export default async function Page({ params }) {
   return (
     <>
       <div>
-        {!articles || articles.length === 0 ? (
-          <div className={styles.notItem}>
-            <p className={styles.notItem__text}>
-              該当する記事は見つかりませんでした。
-            </p>
-          </div>
-        ) : (
-          <>
-            <ArticlesList articles={articles} />
-            <ArticlesPagination
-              totalCount={totalCount}
-              basePath={`/category/${currentCategory}`}
-            />
-          </>
-        )}
+        <>
+          <ArticlesList articles={articles} />
+          <ArticlesPagination
+            totalCount={totalCount}
+            basePath={`/category/${currentCategory}`}
+          />
+        </>
       </div>
     </>
   );

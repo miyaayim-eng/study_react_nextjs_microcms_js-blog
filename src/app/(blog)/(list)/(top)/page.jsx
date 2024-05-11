@@ -25,7 +25,7 @@ export default async function Page() {
         {!articles || articles.length === 0 ? (
           <div className={styles.notItem}>
             <p className={styles.notItem__text}>
-              該当する記事は見つかりませんでした。
+              現在、記事は公開されておりません。
             </p>
           </div>
         ) : (

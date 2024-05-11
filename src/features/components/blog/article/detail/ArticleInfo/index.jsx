@@ -4,21 +4,24 @@ import { Tag } from "@/features/components/blog/Tag";
 import { Category } from "@/features/components/blog/Category";
 import { DateCreated } from "@/features/components/blog/date/DateCreated";
 import { DateRevised } from "@/features/components/blog/date/DateRevised";
+import noImage from "@/public/assets/images/no-image.png";
 
 export const ArticleInfo = ({ article }) => {
   // console.log("article => ", article);
 
   return (
     <>
-      <p className={styles.thumbnail}>
-        <Image
-          src={article.thumbnail.url}
-          alt={article.title}
-          height={article.thumbnail.height}
-          width={article.thumbnail.width}
-          className={styles.thumbnail__image}
-        />
-      </p>
+      {article.thumbnail ? (
+        <p className={styles.thumbnail}>
+          <Image
+            src={article.thumbnail.url}
+            alt={article.title}
+            height={article.thumbnail.height}
+            width={article.thumbnail.width}
+            className={styles.thumbnail__image}
+          />
+        </p>
+      ) : null}
       <h1 className={styles.title}>{article.title}</h1>
       <p className={styles.category}>
         <Category category={article.category} />
