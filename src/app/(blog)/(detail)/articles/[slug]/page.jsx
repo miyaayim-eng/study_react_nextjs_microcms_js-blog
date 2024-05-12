@@ -1,5 +1,6 @@
 import styles from "./page.module.scss";
 import { getArticlesList, getArticlesDetail } from "@/libs/microcms";
+import { Article } from "@/features/components/blog/article/detail/Article";
 
 export async function generateMetadata({ params, searchParams }) {
   const queries = { fields: "title,description", draftKey: searchParams.dk };
