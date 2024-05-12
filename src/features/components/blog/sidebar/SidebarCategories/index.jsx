@@ -4,7 +4,7 @@ import { Category } from "@/features/components/blog/Category";
 import { getCategoryReferencedCount } from "@/libs/getCategoryReferencedCount";
 
 export const SidebarCategories = async ({ currentCategory, currentPage }) => {
-  // カテゴリごとの登録件数を取得
+  // カテゴリーごとの登録件数を取得
   const categoryCountData = await getCategoryReferencedCount();
   // console.log("categoryCountData => ", categoryCountData);
 

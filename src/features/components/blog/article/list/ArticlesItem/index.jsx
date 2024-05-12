@@ -5,8 +5,7 @@ import { Tag } from "@/features/components/blog/Tag";
 import { DateCreated } from "@/features/components/blog/date/DateCreated";
 import { DateRevised } from "@/features/components/blog/date/DateRevised";
 import noImage from "@/public/assets/images/no-image.png";
-import { fetchCategoryThumbnail } from "@/libs/fetchCategoryThumbnail";
-import { fetchTagThumbnail } from "@/libs/fetchTagThumbnail";
+import { getCategoriesDetail, getTagsDetail } from "@/libs/microcms";
 
 export const ArticlesItem = async ({ article }) => {
   // サムネイル画像設定
@@ -17,13 +16,25 @@ export const ArticlesItem = async ({ article }) => {
   let thumbnailHeight = null;
   let thumbnailWidth = null;
   if (article.thumbnail) {
+    // 記事に登録したサムネイル画像
     thumbnail = article.thumbnail;
     thumbnailAlt = article.title;
   } else if (article.tags.length > 0) {
-    thumbnail = await fetchTagThumbnail(article.tags[0].id);
-    thumbnailAlt = article.tags[0].name;
-  } else {
-    thumbnail = await fetchCategoryThumbnail(article.category.id);
+    // タグに登録したサムネイル画像
+    const tagsDetailResponse = await getTagsDetail(article.tags[0].id, {
+      fields: "thumbnail",
+    });
+    const { data } = await tagsDetailResponse.json();
+    thumbnail = data.thumbnail;
+  }
+  if (!thumbnail) {
+    // カテゴリーに登録したサムネイル画像
+    const categoriesDetailResponse = await getCategoriesDetail(
+      article.category.id,
+      { fields: "thumbnail" }
+    );
+    const { data } = await categoriesDetailResponse.json();
+    thumbnail = data.thumbnail;
     thumbnailAlt = article.category.name;
   }
   if (thumbnail) {
@@ -31,6 +42,7 @@ export const ArticlesItem = async ({ article }) => {
     thumbnailHeight = thumbnail.height;
     thumbnailWidth = thumbnail.width;
   } else {
+    // No Imageのサムネイル画像
     thumbnailSrc = noImage;
     thumbnailAlt = "No Image";
   }

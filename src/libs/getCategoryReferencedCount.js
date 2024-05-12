@@ -8,7 +8,7 @@ async function fetchArticles() {
   return articles;
 }
 
-// カテゴリのカウントを計算する関数
+// カテゴリーのカウントを計算する関数
 function calculateCategoryCounts(articles) {
   return articles.reduce((counts, article) => {
     const categoryId = article.category.id;
@@ -17,10 +17,10 @@ function calculateCategoryCounts(articles) {
   }, {});
 }
 
-// カテゴリを参照している記事の数を返すメイン関数
+// カテゴリーを参照している記事の数を返すメイン関数
 export const getCategoryReferencedCount = async () => {
   const articles = await fetchArticles(); // 記事リストを取得
-  const categoryCounts = calculateCategoryCounts(articles); // カテゴリカウントを計算
+  const categoryCounts = calculateCategoryCounts(articles); // カテゴリーカウントを計算
   // console.log("categoryCounts => ", categoryCounts);
   return categoryCounts; // 計算結果を返す
 };

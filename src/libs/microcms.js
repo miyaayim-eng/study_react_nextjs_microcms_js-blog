@@ -79,7 +79,7 @@ export const getArticlesDetail = async (contentId, queries) => {
   }
 };
 
-// ブログカテゴリ一覧を取得
+// カテゴリー一覧を取得
 export const getCategories = async (queries) => {
   try {
     const response = await client.getList({
@@ -109,6 +109,25 @@ export const getCategories = async (queries) => {
   }
 };
 
+// カテゴリー詳細を取得
+export const getCategoriesDetail = async (contentId, queries) => {
+  try {
+    const response = await client.getListDetail({
+      endpoint: "categories",
+      contentId,
+      queries,
+    });
+
+    return NextResponse.json({
+      data: response ?? null,
+      error: null,
+    });
+  } catch (error) {
+    console.error("getCategoriesDetailでエラーが発生しました", error);
+    notFound();
+  }
+};
+
 // ブログタグ一覧を取得
 export const getTags = async (queries) => {
   try {
@@ -123,6 +142,25 @@ export const getTags = async (queries) => {
     });
   } catch (error) {
     console.error("getTagsでエラーが発生しました => ", error);
+    notFound();
+  }
+};
+
+// タグ詳細を取得
+export const getTagsDetail = async (contentId, queries) => {
+  try {
+    const response = await client.getListDetail({
+      endpoint: "tags",
+      contentId,
+      queries,
+    });
+
+    return NextResponse.json({
+      data: response ?? null,
+      error: null,
+    });
+  } catch (error) {
+    console.error("getTagsDetailでエラーが発生しました", error);
     notFound();
   }
 };

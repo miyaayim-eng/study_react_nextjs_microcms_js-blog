@@ -4,7 +4,7 @@ import { Tag } from "@/features/components/blog/Tag";
 import { getTagReferencedCount } from "@/libs/getTagReferencedCount";
 
 export const SidebarTags = async ({ currentTag, currentPage }) => {
-  // カテゴリごとの登録件数を取得
+  // カテゴリーごとの登録件数を取得
   const tagCountData = await getTagReferencedCount();
   // console.log("tagCountData => ", tagCountData);
 

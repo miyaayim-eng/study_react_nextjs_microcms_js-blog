@@ -1,18 +1,22 @@
 import styles from "./layout.module.scss";
-import { getTags } from "@/libs/microcms";
+import { getTags, getTagsDetail } from "@/libs/microcms";
 import { SidebarList } from "@/features/components/blog/sidebar/SidebarList";
-import { fetchTagName } from "@/libs/fetchTagName";
 
 export async function generateMetadata({ params }) {
-  const currentTagName = await fetchTagName(params.tagId);
+  // 現在のタグ名を取得
+  const tagsDetailResponse = await getTagsDetail(params.tagId, {
+    fields: "name",
+  });
+  const { data } = await tagsDetailResponse.json();
+  const currentTagName = data.name;
 
   return {
-    title: `${currentTagName} [タグ]`,
+    title: `${currentTagName} - タグ`,
     description: `${currentTagName}に関する記事一覧です。`,
   };
 }
 
-// カテゴリページの静的パスを作成
+// カテゴリーページの静的パスを作成
 export async function generateStaticParams() {
   // ブログタグ一覧をAPI経由で取得します
   const queries = { fields: "id" };
@@ -35,7 +39,13 @@ export async function generateStaticParams() {
 
 export default async function tagLayout({ children, params }) {
   const currentTag = params.tagId;
-  const currentTagName = await fetchTagName(params.tagId);
+
+  // 現在のタグ名を取得
+  const tagsDetailResponse = await getTagsDetail(params.tagId, {
+    fields: "name",
+  });
+  const { data } = await tagsDetailResponse.json();
+  const currentTagName = data.name;
 
   return (
     <>
