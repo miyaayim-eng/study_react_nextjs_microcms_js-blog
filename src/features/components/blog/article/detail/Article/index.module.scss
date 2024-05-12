@@ -1,0 +1,95 @@
+@use "@global" as *;
+
+.info {
+  margin-bottom: 60px;
+}
+.container {
+  display: flex;
+  column-gap: 32px;
+  @include mq(lg) {
+    flex-direction: column;
+  }
+}
+.contentsWrap {
+  flex: 1;
+}
+.contents {
+  background-color: var(--color-bg_block);
+  border-radius: var(--border-radius);
+}
+
+.toc,
+.sidebar {
+  order: 1;
+}
+
+.toc {
+  position: relative;
+  width: 320px;
+
+  @include mq(lg) {
+    order: 0;
+    width: 100%;
+    margin-bottom: 32px;
+  }
+}
+.sidebar {
+  width: 280px;
+  @include mq(lg) {
+    width: 100%;
+    margin-top: 80px;
+  }
+}
+
+.tocBlock {
+  position: sticky;
+  top: 50px;
+  background-color: var(--color-bg_block);
+  border-radius: var(--border-radius);
+  padding: 32px 16px;
+  @include mq(lg) {
+    padding: 32px 40px;
+  }
+  @include mq(md) {
+    padding: 24px;
+  }
+  @include mq(xxs) {
+    padding: 24px 16px;
+  }
+}
+
+.back {
+  margin-top: 24px;
+
+  &__link {
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    column-gap: 16px;
+    transition: var(--transition_element);
+
+    @include hover {
+      color: var(--color-accent);
+    }
+  }
+  &__iconWrap {
+    width: 40px;
+    aspect-ratio: 1/1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    background-color: var(--color-bg_block);
+    outline: 1px solid transparent;
+    transition: var(--transition_element);
+
+    @include hover-child {
+      outline-color: var(--color-accent);
+    }
+  }
+
+  &__icon {
+    width: 50%;
+    aspect-ratio: 1/1;
+  }
+}
