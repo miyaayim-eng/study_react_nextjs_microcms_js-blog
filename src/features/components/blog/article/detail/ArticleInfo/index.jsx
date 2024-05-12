@@ -4,7 +4,6 @@ import { Tag } from "@/features/components/blog/Tag";
 import { Category } from "@/features/components/blog/Category";
 import { DateCreated } from "@/features/components/blog/date/DateCreated";
 import { DateRevised } from "@/features/components/blog/date/DateRevised";
-import noImage from "@/public/assets/images/no-image.png";
 
 export const ArticleInfo = ({ article }) => {
   // console.log("article => ", article);

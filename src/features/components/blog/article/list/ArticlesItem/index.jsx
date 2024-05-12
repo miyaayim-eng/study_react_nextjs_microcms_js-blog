@@ -6,44 +6,47 @@ import { DateCreated } from "@/features/components/blog/date/DateCreated";
 import { DateRevised } from "@/features/components/blog/date/DateRevised";
 import noImage from "@/public/assets/images/no-image.png";
 import { fetchCategoryThumbnail } from "@/libs/fetchCategoryThumbnail";
+import { fetchTagThumbnail } from "@/libs/fetchTagThumbnail";
 
 export const ArticlesItem = async ({ article }) => {
-  let categoryThumbnail = null; // 初期値としてnullを設定
-  // 記事のサムネイルが存在しない場合のみカテゴリーサムネイルを取得（APIリクエスト回数を減らす目的）
-  if (!article.thumbnail) {
-    categoryThumbnail = await fetchCategoryThumbnail(article.category.id);
+  // サムネイル画像設定
+  // 表示サムネイル優先順位 => 記事 > タグ（先頭タグ） > カテゴリー > No image
+  let thumbnail = null;
+  let thumbnailSrc = null;
+  let thumbnailAlt = null;
+  let thumbnailHeight = null;
+  let thumbnailWidth = null;
+  if (article.thumbnail) {
+    thumbnail = article.thumbnail;
+    thumbnailAlt = article.title;
+  } else if (article.tags.length > 0) {
+    thumbnail = await fetchTagThumbnail(article.tags[0].id);
+    thumbnailAlt = article.tags[0].name;
+  } else {
+    thumbnail = await fetchCategoryThumbnail(article.category.id);
+    thumbnailAlt = article.category.name;
+  }
+  if (thumbnail) {
+    thumbnailSrc = thumbnail.url;
+    thumbnailHeight = thumbnail.height;
+    thumbnailWidth = thumbnail.width;
+  } else {
+    thumbnailSrc = noImage;
+    thumbnailAlt = "No Image";
   }
 
   return (
     <li className={styles.item}>
       <div className={styles.container}>
         <p className={styles.thumbnail}>
-          {article.thumbnail ? (
-            // 記事のサムネイル画像を表示
-            <Image
-              src={article.thumbnail.url}
-              alt={article.title}
-              height={article.thumbnail.height}
-              width={article.thumbnail.width}
-              className={styles.thumbnail__image}
-              priority
-            />
-          ) : categoryThumbnail ? (
-            // カテゴリーのサムネイル画像を表示
-            <Image
-              src={categoryThumbnail.url}
-              alt={categoryThumbnail.title}
-              height={categoryThumbnail.height}
-              width={categoryThumbnail.width}
-              className={styles.thumbnail__image}
-            />
-          ) : (
-            <Image
-              src={noImage}
-              alt="No Image"
-              className={styles.thumbnail__image}
-            />
-          )}
+          <Image
+            src={thumbnailSrc}
+            alt={thumbnailAlt}
+            height={thumbnailHeight}
+            width={thumbnailWidth}
+            className={styles.thumbnail__image}
+            priority
+          />
         </p>
         <div className={styles.info}>
           <h2 className={styles.title}>

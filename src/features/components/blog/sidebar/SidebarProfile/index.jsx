@@ -7,7 +7,12 @@ export const SidebarProfile = () => {
     <div className={styles.profile}>
       <div className={styles.me}>
         <div className={styles.box__image}>
-          <Image src={profilePic} alt="みやがめ" className={styles.image} />
+          <Image
+            src={profilePic}
+            alt="みやがめ"
+            className={styles.image}
+            priority
+          />
         </div>
         <p className={styles.name}>みやがめ</p>
       </div>
