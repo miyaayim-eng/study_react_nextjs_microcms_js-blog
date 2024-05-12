@@ -6,8 +6,8 @@ import { ArticleInfo } from "@/features/components/blog/article/detail/ArticleIn
 import { ArticleContents } from "@/features/components/blog/article/detail/ArticleContents";
 import { ArticleToc } from "@/features/components/blog/article/detail/ArticleToc";
 
-export async function generateMetadata({ params }) {
-  const queries = { fields: "title,description" };
+export async function generateMetadata({ params, searchParams }) {
+  const queries = { fields: "title,description", draftKey: searchParams.dk };
   const articlesDetailResponse = await getArticlesDetail(params.slug, queries);
   const { data: article } = await articlesDetailResponse.json();
 
@@ -49,10 +49,12 @@ export async function generateStaticParams() {
   return [...paths];
 }
 
-export default async function Page({ params }) {
+export default async function Page({ params, searchParams }) {
   // URLパラメータのIDを参照して、ブログの詳細を取得
   // await console.log("params => ", params);
-  const articlesDetailResponse = await getArticlesDetail(params.slug);
+  const articlesDetailResponse = await getArticlesDetail(params.slug, {
+    draftKey: searchParams.dk,
+  });
   const { data: article } = await articlesDetailResponse.json();
 
   return (
