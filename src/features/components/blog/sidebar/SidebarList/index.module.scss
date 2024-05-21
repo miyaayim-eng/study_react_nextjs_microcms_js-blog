@@ -7,7 +7,6 @@
   height: 100%;
   @include mq(lg) {
     max-width: 800px;
-    // width: 100%;
     margin-inline: auto;
   }
 }
@@ -25,7 +24,6 @@
   }
   @include mq(xxs) {
     flex-direction: column;
-    // padding: 16px 16px;
   }
 }
 .sidebar__stickyBox {
@@ -35,14 +33,11 @@
   position: sticky;
   top: 24px;
 }
-.sidebar__item {
-}
 .sidebar__title {
   display: flex;
   align-items: center;
   column-gap: 0.15em;
   font-size: to-rem(24);
-  color: var(--color-text_head);
   font-weight: 700;
   line-height: 1;
   @include ff-en;
@@ -51,7 +46,5 @@
   &__icon {
     width: 1.5rem;
     aspect-ratio: 1/1;
-  }
-  &__text {
   }
 }

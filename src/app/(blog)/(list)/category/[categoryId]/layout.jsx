@@ -1,37 +1,28 @@
 import styles from "./layout.module.scss";
-import { getCategories, getCategoriesDetail } from "@/libs/microcms";
+import { getCategoriesList, getCategoriesDetail } from "@/libs/microcms";
 import { SidebarList } from "@/features/components/blog/sidebar/SidebarList";
-
-export async function generateMetadata({ params }) {
-  const categoriesDetailResponse = await getCategoriesDetail(
-    params.categoryId,
-    { fields: "name" }
-  );
-  const { data } = await categoriesDetailResponse.json();
-  const currentCategoryName = data.name;
-
-  return {
-    title: `${currentCategoryName} - カテゴリー`,
-    description: `${currentCategoryName}に関する記事一覧です。`,
-  };
-}
+import { getCategoryReferencedCount } from "@/libs/getFilterReferencedCount";
 
 // カテゴリーページの静的パスを作成
 export async function generateStaticParams() {
   // ブログカテゴリー一覧をAPI経由で取得します
   const queries = { fields: "id" };
-  const categoriesResponse = await getCategories(queries);
-
+  const categoriesListResponse = await getCategoriesList(queries);
   // 取得しているデータがわかりやすいように、変数名を変更しています。
-  const { data: categories } = await categoriesResponse.json();
-  // console.log("categories => ", categories);
+  const { data: categories } = await categoriesListResponse.json();
+  // カテゴリーごとの登録件数を取得
+  const categoryCountData = await getCategoryReferencedCount();
 
-  const paths = categories.map((category) => {
-    return {
-      categoryId: category.id,
-    };
-  });
-  // await console.log("paths => ", paths);
+  const paths = categories
+    .map((category) => {
+      if (categoryCountData[category.id]) {
+        return {
+          categoryId: category.id,
+        };
+      }
+      return null; // 明示的に null を返す
+    })
+    .filter(Boolean); // null または undefined の要素を除去
 
   // 作成したパスの配列を返します。
   return [...paths];

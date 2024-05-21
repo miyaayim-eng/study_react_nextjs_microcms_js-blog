@@ -10,10 +10,10 @@
     flex-direction: column;
   }
 }
-.contentsWrap {
+.bodyWrap {
   flex: 1;
 }
-.contents {
+.body {
   background-color: var(--color-bg_block);
   border-radius: var(--border-radius);
 }

@@ -1,25 +1,55 @@
+import { notFound } from "next/navigation";
 import styles from "./page.module.scss";
+import {
+  SITE_NAME,
+  FILTER_SEPARATOR,
+  NEXT_PUBLIC_URL,
+  OGP,
+  TWITTER,
+  FILTER_DESCRIPTION,
+} from "@/constants/metadata";
 import { getArticlesList } from "@/libs/microcms";
 import { LIMIT } from "@/constants";
 import { SidebarList } from "@/features/components/blog/sidebar/SidebarList";
-import { ArticlesList } from "@/features/components/blog/article/list/ArticlesList";
-import { ArticlesPagination } from "@/features/components/blog/article/list/ArticlesPagination";
+import { Cards } from "@/features/components/blog/article/list/Cards";
+import { Pagination } from "@/features/components/blog/article/list/Pagination";
 
 export async function generateMetadata({ searchParams }) {
   const searchKeyword = searchParams.q;
+  const title = `${searchKeyword}${FILTER_SEPARATOR}検索`;
+  const description = `${searchKeyword}${FILTER_DESCRIPTION}`;
+  const pageUrl = `search/?q=${searchParams.q}`;
+
   return {
-    title: `${searchKeyword} [検索]`,
-    description: `${searchKeyword}に関する記事検索結果一覧です。`,
+    title,
+    description,
+    alternates: {
+      canonical: `${pageUrl}`,
+    },
+    openGraph: {
+      title,
+      description,
+      url: `${NEXT_PUBLIC_URL}${pageUrl}`,
+      siteName: SITE_NAME,
+      locale: OGP.LOCALE,
+      type: "article",
+      images: OGP.IMAGE,
+    },
+    twitter: {
+      card: TWITTER.CARD,
+      images: TWITTER.IMAGE,
+    },
   };
 }
 
 export default async function Page({ searchParams }) {
   // URLから現在の検索キーワードを取得
   const searchKeyword = searchParams.q;
-  // console.log("searchKeyword => ", searchKeyword);
   // ブログ一覧を取得
   const queries = { limit: LIMIT, q: searchKeyword };
-  const articlesListResponse = await getArticlesList(queries);
+  const articlesListResponse = await getArticlesList(queries).catch(() =>
+    notFound()
+  );
 
   // 取得しているデータがわかりやすいように、変数名を変更しています。
   const { data: articles, totalCount: totalCount } =
@@ -46,8 +76,8 @@ export default async function Page({ searchParams }) {
             </div>
           ) : (
             <>
-              <ArticlesList articles={articles} />
-              <ArticlesPagination
+              <Cards articles={articles} />
+              <Pagination
                 totalCount={totalCount}
                 basePath="/search"
                 searchKeyword={searchKeyword}

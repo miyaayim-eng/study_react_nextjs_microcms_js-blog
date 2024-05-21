@@ -1,4 +1,5 @@
 import styles from "./page.module.scss";
+import { SITE_NAME, NEXT_PUBLIC_URL, OGP, TWITTER } from "@/constants/metadata";
 import { getArticlesList, getArticlesDetail } from "@/libs/microcms";
 import { Article } from "@/features/components/blog/article/detail/Article";
 
@@ -6,11 +7,28 @@ export async function generateMetadata({ params, searchParams }) {
   const queries = { fields: "title,description", draftKey: searchParams.dk };
   const articlesDetailResponse = await getArticlesDetail(params.slug, queries);
   const { data: article } = await articlesDetailResponse.json();
+  const pageUrl = `articles/${params.slug}/`;
 
   // metadataオブジェクトの基本形を設定
   const metadata = {
     title: article.title,
     description: article.description ? article.description : article.title,
+    alternates: {
+      canonical: `${pageUrl}`,
+    },
+    openGraph: {
+      title: article.title,
+      description: article.description ? article.description : article.title,
+      url: `${NEXT_PUBLIC_URL}${pageUrl}`,
+      siteName: SITE_NAME,
+      locale: OGP.LOCALE,
+      type: "article",
+      images: OGP.IMAGE,
+    },
+    twitter: {
+      card: TWITTER.CARD,
+      images: TWITTER.IMAGE,
+    },
   };
 
   // 下書きのプレビューページではインデックス無効
@@ -48,7 +66,6 @@ export async function generateStaticParams() {
       slug: article.id,
     };
   });
-  // await console.log("paths => ", paths);
 
   // 作成したパスの配列を返します。
   return [...paths];

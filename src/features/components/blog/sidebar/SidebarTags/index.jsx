@@ -1,20 +1,18 @@
 import styles from "./index.module.scss";
-import { getTags } from "@/libs/microcms";
+import { getTagsList } from "@/libs/microcms";
 import { Tag } from "@/features/components/blog/Tag";
-import { getTagReferencedCount } from "@/libs/getTagReferencedCount";
+import { getTagReferencedCount } from "@/libs/getFilterReferencedCount";
 
 export const SidebarTags = async ({ currentTag, currentPage }) => {
   // カテゴリーごとの登録件数を取得
   const tagCountData = await getTagReferencedCount();
-  // console.log("tagCountData => ", tagCountData);
 
   // ブログタグを取得
   const queries = { fields: "id,name" };
-  const tagsResponse = await getTags(queries);
+  const tagsListResponse = await getTagsList(queries);
 
   // 取得しているデータがわかりやすいように、変数名を変更しています。
-  const { data: tags } = await tagsResponse.json();
-  // console.log("tags => ", tags);
+  const { data: tags } = await tagsListResponse.json();
 
   // 生成するカテゴリーがカレントであるかを判別するための関数
   const isCurrentTag = (tagId) => {

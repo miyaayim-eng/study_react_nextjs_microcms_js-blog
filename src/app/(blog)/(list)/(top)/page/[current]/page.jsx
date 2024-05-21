@@ -1,9 +1,43 @@
 import { notFound } from "next/navigation";
+import {
+  SITE_NAME,
+  NEXT_PUBLIC_URL,
+  OGP,
+  TWITTER,
+  HOME_DESCRIPTION,
+} from "@/constants/metadata";
 import styles from "./page.module.scss";
 import { getArticlesList } from "@/libs/microcms";
 import { LIMIT } from "@/constants";
-import { ArticlesList } from "@/features/components/blog/article/list/ArticlesList";
-import { ArticlesPagination } from "@/features/components/blog/article/list/ArticlesPagination";
+import { Cards } from "@/features/components/blog/article/list/Cards";
+import { Pagination } from "@/features/components/blog/article/list/Pagination";
+
+export async function generateMetadata({ params }) {
+  const title = SITE_NAME;
+  const description = HOME_DESCRIPTION;
+  const pageUrl = `page/${params.current}/`;
+
+  return {
+    absolute: title,
+    description,
+    alternates: {
+      canonical: `${pageUrl}`,
+    },
+    openGraph: {
+      absolute: title,
+      description,
+      url: `${NEXT_PUBLIC_URL}${pageUrl}`,
+      siteName: SITE_NAME,
+      locale: OGP.LOCALE,
+      type: "website",
+      images: OGP.IMAGE,
+    },
+    twitter: {
+      card: TWITTER.CARD,
+      images: TWITTER.IMAGE,
+    },
+  };
+}
 
 // ページネーションページの静的パスを作成
 export async function generateStaticParams() {
@@ -25,8 +59,6 @@ export async function generateStaticParams() {
       current: pageNumber.toString(),
     }));
 
-  // await console.log("paths => ", paths);
-
   // 作成したパスの配列を返します。
   return [...paths];
 }
@@ -37,11 +69,9 @@ export default async function Page({ params }) {
 
   // ブログ一覧を取得
   const queries = { offset: (currentPage - 1) * LIMIT, limit: LIMIT };
-  const articlesListResponse = await getArticlesList(queries);
-
-  // console.log('params => ', params);
-  // console.log('params.categoryId => ', params.categoryId);
-  // console.log('currentCategory => ', currentCategory);
+  const articlesListResponse = await getArticlesList(queries).catch(() =>
+    notFound()
+  );
 
   // 取得しているデータがわかりやすいように、変数名を変更しています。
   const { data: articles, totalCount: totalCount } =
@@ -54,8 +84,8 @@ export default async function Page({ params }) {
   return (
     <>
       <div>
-        <ArticlesList articles={articles} />
-        <ArticlesPagination totalCount={totalCount} currentPage={currentPage} />
+        <Cards articles={articles} />
+        <Pagination totalCount={totalCount} currentPage={currentPage} />
       </div>
     </>
   );

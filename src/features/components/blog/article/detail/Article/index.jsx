@@ -1,21 +1,21 @@
 import Link from "next/link";
 import styles from "./index.module.scss";
 import { SidebarList } from "@/features/components/blog/sidebar/SidebarList";
-import { ArticleInfo } from "@/features/components/blog/article/detail/ArticleInfo";
-import { ArticleContents } from "@/features/components/blog/article/detail/ArticleContents";
-import { ArticleToc } from "@/features/components/blog/article/detail/ArticleToc";
+import { Info } from "@/features/components/blog/article/detail/Info";
+import { Body } from "@/features/components/blog/article/detail/Body";
+import { TocBox } from "@/features/components/blog/article/detail/TocBox";
 
 export const Article = ({ article }) => {
   return (
     <article>
       <div className={styles.info}>
-        <ArticleInfo article={article} />
+        <Info article={article} />
       </div>
       <div className={styles.container}>
         {article.toc ? (
           <div className={styles.toc}>
             <div className={styles.tocBlock}>
-              <ArticleToc article={article} />
+              <TocBox article={article} />
             </div>
           </div>
         ) : (
@@ -23,9 +23,9 @@ export const Article = ({ article }) => {
             <SidebarList />
           </div>
         )}
-        <div className={styles.contentsWrap}>
-          <div className={styles.contents}>
-            <ArticleContents article={article} />
+        <div className={styles.bodyWrap}>
+          <div className={styles.body}>
+            <Body article={article} />
           </div>
           <p className={styles.back}>
             <Link href={`/`} className={styles.back__link}>

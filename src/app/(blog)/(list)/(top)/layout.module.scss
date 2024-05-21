@@ -14,10 +14,21 @@
 
   &__head {
     width: fit-content;
-    margin: 0 auto 16px;
+    margin: 0 auto 32px;
     font-size: to-rem(40);
     font-weight: 700;
-    line-height: 1;
+    line-height: 1.2;
+    padding: 12px 32px 16px;
+    border: 4px solid currentColor;
+    text-align: center;
+    @include mq(xxs) {
+      padding: 12px 28px 16px;
+    }
+    @include mq-not(xxs) {
+      &__br {
+        display: none;
+      }
+    }
   }
   &__desc {
     width: fit-content;

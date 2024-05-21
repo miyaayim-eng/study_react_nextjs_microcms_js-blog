@@ -1,9 +1,17 @@
 import { notFound } from "next/navigation";
+import {
+  SITE_NAME,
+  FILTER_SEPARATOR,
+  NEXT_PUBLIC_URL,
+  OGP,
+  TWITTER,
+  FILTER_DESCRIPTION,
+} from "@/constants/metadata";
 import styles from "./page.module.scss";
 import { LIMIT } from "@/constants";
-import { getArticlesList } from "@/libs/microcms";
-import { ArticlesList } from "@/features/components/blog/article/list/ArticlesList";
-import { ArticlesPagination } from "@/features/components/blog/article/list/ArticlesPagination";
+import { getArticlesList, getCategoriesDetail } from "@/libs/microcms";
+import { Cards } from "@/features/components/blog/article/list/Cards";
+import { Pagination } from "@/features/components/blog/article/list/Pagination";
 
 // ページネーションページの静的パスを作成
 export async function generateStaticParams({ params }) {
@@ -26,12 +34,41 @@ export async function generateStaticParams({ params }) {
       current: pageNumber.toString(),
     }));
 
-  // await console.log("params => ", params);
-  // await console.log("params.categoryId => ", params.categoryId);
-  // await console.log("paths => ", paths);
-
   // 作成したパスの配列を返します。
   return [...paths];
+}
+
+export async function generateMetadata({ params }) {
+  const categoriesDetailResponse = await getCategoriesDetail(
+    params.categoryId,
+    { fields: "name" }
+  );
+  const { data } = await categoriesDetailResponse.json();
+  const currentCategoryName = data.name;
+  const title = `${currentCategoryName}${FILTER_SEPARATOR}カテゴリー`;
+  const description = `${currentCategoryName}${FILTER_DESCRIPTION}`;
+  const pageUrl = `category/${params.categoryId}/page/${params.current}/`;
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: `${pageUrl}`,
+    },
+    openGraph: {
+      title,
+      description,
+      url: `${NEXT_PUBLIC_URL}${pageUrl}`,
+      siteName: SITE_NAME,
+      locale: OGP.LOCALE,
+      type: "website",
+      images: OGP.IMAGE,
+    },
+    twitter: {
+      card: TWITTER.CARD,
+      images: TWITTER.IMAGE,
+    },
+  };
 }
 
 export default async function Page({ params }) {
@@ -40,10 +77,6 @@ export default async function Page({ params }) {
   // URLから現在のページ番号を数値として取得
   const currentPage = parseInt(params.current, 10);
 
-  // console.log("params => ", params);
-  // console.log('params.categoryId => ', params.categoryId);
-  // console.log('currentCategory => ', currentCategory);
-
   // ブログ一覧を取得
   const filters = `category[equals]${params.categoryId}`;
   const queries = {
@@ -51,7 +84,9 @@ export default async function Page({ params }) {
     limit: LIMIT,
     filters: filters,
   };
-  const articlesListResponse = await getArticlesList(queries);
+  const articlesListResponse = await getArticlesList(queries).catch(() =>
+    notFound()
+  );
 
   // 取得しているデータがわかりやすいように、変数名を変更しています。
   const { data: articles, totalCount: totalCount } =
@@ -64,8 +99,8 @@ export default async function Page({ params }) {
   return (
     <>
       <div>
-        <ArticlesList articles={articles} />
-        <ArticlesPagination
+        <Cards articles={articles} />
+        <Pagination
           totalCount={totalCount}
           basePath={`/category/${currentCategory}`}
           currentPage={currentPage}

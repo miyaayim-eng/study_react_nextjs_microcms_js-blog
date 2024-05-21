@@ -1,7 +1,5 @@
 @use "@global" as *;
 
-.category {
-}
 .list {
   display: flex;
   flex-wrap: wrap;
@@ -13,5 +11,3 @@
     flex-direction: row;
   }
 }
-// .item {
-// }

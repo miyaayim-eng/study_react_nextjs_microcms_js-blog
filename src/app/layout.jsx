@@ -1,36 +1,83 @@
+// ローカルフォント読み込み
+import localFont from "next/font/local";
+const zen_maru_gothic = localFont({
+  src: [
+    {
+      path: "../../src/public/assets/fonts/Zen_Maru_Gothic/ZenMaruGothic-Regular.ttf",
+      weight: "400",
+    },
+    {
+      path: "../../src/public/assets/fonts/Zen_Maru_Gothic/ZenMaruGothic-Bold.ttf",
+      weight: "700",
+    },
+  ],
+  display: "swap",
+  variable: " --ff-zen_maru",
+});
+const quicksand = localFont({
+  src: "../../src/public/assets/fonts/Quicksand/Quicksand-VariableFont_wght.ttf",
+  display: "swap",
+  variable: " --ff-en",
+});
+
 // 共通のCSS
 import "@sass/foundation/_index.scss";
 
-// 共通のパーツ
+import {
+  SITE_NAME,
+  PAGE_SEPARATOR,
+  NEXT_PUBLIC_URL,
+  OGP,
+  TWITTER,
+  HOME_DESCRIPTION,
+} from "@/constants/metadata";
+const description = HOME_DESCRIPTION;
+
+// import { generateBlogInfo } from "@/libs/generateBlogInfo";
+// const blogInfo = await generateBlogInfo();
+// console.log("blogInfo => ", blogInfo);
+
 import { Svg } from "@/components/elements/Svg";
 import { Header } from "@/components/layouts/Header";
 import { Footer } from "@/components/layouts/Footer";
 
 // 共通のmetaタグ
 export const metadata = {
+  metadataBase: new URL(NEXT_PUBLIC_URL),
   title: {
-    default: "みやがめボックス",
-    template: `%s | みやがめボックス`,
+    default: SITE_NAME,
+    template: `%s${PAGE_SEPARATOR}${SITE_NAME}`,
   },
-  description:
-    "主にWeb制作についての技術記事を掲載しているブログサイトです。HTML、CSS、JavaScript、React、Next.jsなど、フロントエンドに関わる技術を学んでいます。",
-  // openGraph: {
-  //   title: {
-  //     default: "サイトタイトル",
-  //     template: `%s | サイトタイトル`,
-  //   },
-  //   description: "",
-  // },
-  // twitter: {
-  //   card: "summary_large_image",
-  // },
+  description,
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    title: {
+      default: SITE_NAME,
+      template: `%s${PAGE_SEPARATOR}${SITE_NAME}`,
+    },
+    description,
+    url: NEXT_PUBLIC_URL,
+    siteName: SITE_NAME,
+    locale: OGP.LOCALE,
+    type: "website",
+    images: OGP.IMAGE,
+  },
+  twitter: {
+    card: TWITTER.CARD,
+    images: TWITTER.IMAGE,
+  },
 };
 
 // 共通の見た目
 export default function RootLayout({ children }) {
   return (
     <>
-      <html lang="ja">
+      <html
+        lang="ja"
+        className={`${zen_maru_gothic.variable} ${quicksand.variable}`}
+      >
         <body>
           <Svg />
           <Header />

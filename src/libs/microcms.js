@@ -16,7 +16,7 @@ export const client = createClient({
   apiKey: process.env.MICROCMS_API_KEY,
 });
 
-// ブログ記事一覧を取得
+// 記事一覧を取得
 export const getArticlesList = async (queries) => {
   try {
     const response = await client.getList({
@@ -34,11 +34,6 @@ export const getArticlesList = async (queries) => {
       // },
     });
 
-    // この時点の'response'の中身は、
-    // contents: [{id:(...), title:(...), content:(...)},{id:(...), title:(...), content:(...)}]
-    // といった感じ。
-    // console.log("articlesListData => ", response);
-
     return NextResponse.json({
       data: response.contents ?? null,
       error: null,
@@ -50,7 +45,7 @@ export const getArticlesList = async (queries) => {
   }
 };
 
-// ブログ記事詳細を取得
+// 記事詳細を取得
 export const getArticlesDetail = async (contentId, queries) => {
   try {
     const response = await client.getListDetail({
@@ -58,15 +53,6 @@ export const getArticlesDetail = async (contentId, queries) => {
       // 'contentId'はIDを受け取り、取得する詳細記事を判別するためのもの
       contentId,
       queries,
-
-      // revalidateでオプションを指定することで動的（Dynamic Rendering）なレンダリングとなる。
-      // 'revalidate = 60'とすれば60秒間はキャッシュを利用するISR
-      // 'revalidate = 0'とすれば常にレンダリングを行うSSR
-      // customRequestInit: {
-      //   next: {
-      //     revalidate: 0,
-      //   },
-      // },
     });
 
     return NextResponse.json({
@@ -80,23 +66,12 @@ export const getArticlesDetail = async (contentId, queries) => {
 };
 
 // カテゴリー一覧を取得
-export const getCategories = async (queries) => {
+export const getCategoriesList = async (queries) => {
   try {
     const response = await client.getList({
       endpoint: "categories",
       queries,
-
-      // revalidateでオプションを指定することで動的（Dynamic Rendering）なレンダリングとなる。
-      // 'revalidate = 60'とすれば60秒間はキャッシュを利用するISR
-      // 'revalidate = 0'とすれば常にレンダリングを行うSSR
-      // customRequestInit: {
-      //   next: {
-      //     revalidate: 0,
-      //   },
-      // },
     });
-
-    // console.log("categoriesData => ", response);
 
     return NextResponse.json({
       data: response.contents ?? null,
@@ -104,7 +79,7 @@ export const getCategories = async (queries) => {
       totalCount: response.totalCount,
     });
   } catch (error) {
-    console.error("getCategoriesでエラーが発生しました", error);
+    console.error("getCategoriesListでエラーが発生しました", error);
     notFound();
   }
 };
@@ -129,7 +104,7 @@ export const getCategoriesDetail = async (contentId, queries) => {
 };
 
 // ブログタグ一覧を取得
-export const getTags = async (queries) => {
+export const getTagsList = async (queries) => {
   try {
     const response = await client.getList({
       endpoint: "tags",
@@ -141,7 +116,7 @@ export const getTags = async (queries) => {
       error: null,
     });
   } catch (error) {
-    console.error("getTagsでエラーが発生しました => ", error);
+    console.error("getTagsListでエラーが発生しました => ", error);
     notFound();
   }
 };
