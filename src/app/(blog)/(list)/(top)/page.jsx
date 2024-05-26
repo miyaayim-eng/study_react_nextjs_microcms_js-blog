@@ -4,6 +4,9 @@ import { getArticlesList } from "@/libs/microcms";
 import { LIMIT } from "@/constants";
 import { Cards } from "@/features/components/blog/article/list/Cards";
 import { Pagination } from "@/features/components/blog/article/list/Pagination";
+// import { generateBlogInfo } from "@/libs/generateBlogInfo";
+// const blogInfo = await generateBlogInfo();
+// const articleInfo = blogInfo.articleInfo;
 
 export default async function Page() {
   // ブログ一覧を取得
@@ -11,10 +14,7 @@ export default async function Page() {
   const articlesListResponse = await getArticlesList(queries).catch(() =>
     notFound()
   );
-
-  // 取得しているデータがわかりやすいように、変数名を変更しています。
-  const { data: articles, totalCount: totalCount } =
-    await articlesListResponse.json();
+  const { contents: articles, totalCount: totalCount } = articlesListResponse;
 
   return (
     <>

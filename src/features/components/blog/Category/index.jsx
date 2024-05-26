@@ -1,7 +1,7 @@
 import Link from "next/link";
 import styles from "./index.module.scss";
 
-export const Category = async ({ category, categoryCountData, isCurrent }) => {
+export const Category = async ({ category, isCurrent }) => {
   // コンテンツを生成するための関数
   const categoryContent = (
     <>
@@ -9,9 +9,9 @@ export const Category = async ({ category, categoryCountData, isCurrent }) => {
         <use href="#svg-category" />
       </svg>
       <span className={styles.name}>{category.name}</span>
-      {/* categoryCountDataが存在し、nullでもない場合のみ、countを表示 */}
-      {categoryCountData !== undefined && categoryCountData !== null && (
-        <span className={styles.count}>{categoryCountData}</span>
+      {/* totalCountが存在し、nullでもない場合のみ、countを表示 */}
+      {category.totalCount !== undefined && category.totalCount !== null && (
+        <span className={styles.count}>{category.totalCount}</span>
       )}
     </>
   );

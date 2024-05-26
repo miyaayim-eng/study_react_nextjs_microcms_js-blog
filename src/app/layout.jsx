@@ -1,3 +1,6 @@
+import { generateBlogInfo } from "@/libs/generateBlogInfo";
+const blogInfo = await generateBlogInfo();
+
 // ローカルフォント読み込み
 import localFont from "next/font/local";
 const zen_maru_gothic = localFont({
@@ -32,10 +35,6 @@ import {
   HOME_DESCRIPTION,
 } from "@/constants/metadata";
 const description = HOME_DESCRIPTION;
-
-// import { generateBlogInfo } from "@/libs/generateBlogInfo";
-// const blogInfo = await generateBlogInfo();
-// console.log("blogInfo => ", blogInfo);
 
 import { Svg } from "@/components/elements/Svg";
 import { Header } from "@/components/layouts/Header";
@@ -80,7 +79,7 @@ export default function RootLayout({ children }) {
       >
         <body>
           <Svg />
-          <Header />
+          <Header blogInfo={blogInfo} />
           <main>{children}</main>
           <Footer />
         </body>

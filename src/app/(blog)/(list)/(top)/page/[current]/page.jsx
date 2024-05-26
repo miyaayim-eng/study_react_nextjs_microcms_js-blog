@@ -11,6 +11,9 @@ import { getArticlesList } from "@/libs/microcms";
 import { LIMIT } from "@/constants";
 import { Cards } from "@/features/components/blog/article/list/Cards";
 import { Pagination } from "@/features/components/blog/article/list/Pagination";
+// import { generateBlogInfo } from "@/libs/generateBlogInfo";
+// const blogInfo = await generateBlogInfo();
+// const articleInfo = blogInfo.articleInfo;
 
 export async function generateMetadata({ params }) {
   const title = SITE_NAME;
@@ -43,9 +46,10 @@ export async function generateMetadata({ params }) {
 export async function generateStaticParams() {
   // ブログ一覧を取得
   const queries = { limit: LIMIT };
-  const articlesListResponse = await getArticlesList(queries);
-  // 取得しているデータがわかりやすいように、変数名を変更しています。
-  const { totalCount: totalCount } = await articlesListResponse.json();
+  const articlesListResponse = await getArticlesList(queries).catch(() =>
+    notFound()
+  );
+  const { totalCount: totalCount } = articlesListResponse;
 
   if (totalCount <= LIMIT) {
     return []; // ページが1ページ以下の場合はパスを生成しない
@@ -72,10 +76,7 @@ export default async function Page({ params }) {
   const articlesListResponse = await getArticlesList(queries).catch(() =>
     notFound()
   );
-
-  // 取得しているデータがわかりやすいように、変数名を変更しています。
-  const { data: articles, totalCount: totalCount } =
-    await articlesListResponse.json();
+  const { contents: articles, totalCount: totalCount } = articlesListResponse;
 
   if (articles.length === 0) {
     notFound();

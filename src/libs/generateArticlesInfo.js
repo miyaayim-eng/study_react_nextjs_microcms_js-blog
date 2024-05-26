@@ -1,10 +1,13 @@
+import { notFound } from "next/navigation";
 import { getArticlesList } from "@/libs/microcms";
 import { LIMIT } from "@/constants";
 
 export const generateArticlesInfo = async () => {
   const articlesListQueries = { limit: 100 };
-  const articlesListResponse = await getArticlesList(articlesListQueries);
-  const { data: articles } = await articlesListResponse.json();
+  const articlesListResponse = await getArticlesList(articlesListQueries).catch(
+    () => notFound()
+  );
+  const { contents: articles } = articlesListResponse;
 
   // ページ番号のパス配列を取得
   const getPagePaths = (totalCount) => {
@@ -58,6 +61,7 @@ export const generateArticlesInfo = async () => {
   // 全記事一覧ページでのページ番号の配列
   const articlesTotalCount = articles.length;
   const allArticlesPagePaths = getPagePaths(articlesTotalCount);
+  // console.log("articlesTotalCount => ", articlesTotalCount);
 
   // 各カテゴリーの記事一覧ページ番号のオブジェクト
   const categoriesPagePaths = {}; // 空のオブジェクトとして初期化
@@ -75,6 +79,7 @@ export const generateArticlesInfo = async () => {
 
   return {
     articles,
+    articlesTotalCount,
     categoriesInfo,
     tagsInfo,
     allArticlesPagePaths,

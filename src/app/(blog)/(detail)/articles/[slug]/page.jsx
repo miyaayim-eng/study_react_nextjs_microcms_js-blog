@@ -5,8 +5,7 @@ import { Article } from "@/features/components/blog/article/detail/Article";
 
 export async function generateMetadata({ params, searchParams }) {
   const queries = { fields: "title,description", draftKey: searchParams.dk };
-  const articlesDetailResponse = await getArticlesDetail(params.slug, queries);
-  const { data: article } = await articlesDetailResponse.json();
+  const article = await getArticlesDetail(params.slug, queries);
   const pageUrl = `articles/${params.slug}/`;
 
   // metadataオブジェクトの基本形を設定
@@ -53,7 +52,7 @@ export async function generateStaticParams() {
   const articlesListResponse = await getArticlesList();
 
   // 取得しているデータがわかりやすいように、変数名を変更しています。
-  const { data: articles } = await articlesListResponse.json();
+  const { contents: articles } = articlesListResponse;
 
   // 取得したブログ一覧から、各ブログのIDを使用して
   // ページ生成に必要なパラメータオブジェクトの配列を作成します
@@ -73,11 +72,8 @@ export async function generateStaticParams() {
 
 export default async function Page({ params, searchParams }) {
   // URLパラメータのIDを参照して、ブログの詳細を取得
-  // await console.log("params => ", params);
-  const articlesDetailResponse = await getArticlesDetail(params.slug, {
+  const article = await getArticlesDetail(params.slug, {
     draftKey: searchParams.dk,
   });
-  const { data: article } = await articlesDetailResponse.json();
-
   return <Article article={article} />;
 }

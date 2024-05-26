@@ -59,6 +59,6 @@ export const getPagesReferencedCount = async () => {
   const articles = await fetchArticles(); // 記事リストを取得
   const totalCount = articles.length;
   const pagesArray = getPagesPaths(totalCount);
-  console.log("pagesArray => ", pagesArray);
+  // console.log("pagesArray => ", pagesArray);
   return pagesArray; // 計算結果を返す
 };

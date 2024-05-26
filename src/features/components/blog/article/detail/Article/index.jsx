@@ -4,6 +4,8 @@ import { SidebarList } from "@/features/components/blog/sidebar/SidebarList";
 import { Info } from "@/features/components/blog/article/detail/Info";
 import { Body } from "@/features/components/blog/article/detail/Body";
 import { TocBox } from "@/features/components/blog/article/detail/TocBox";
+import { generateBlogInfo } from "@/libs/generateBlogInfo";
+const blogInfo = await generateBlogInfo();
 
 export const Article = ({ article }) => {
   return (
@@ -20,7 +22,7 @@ export const Article = ({ article }) => {
           </div>
         ) : (
           <div className={styles.sidebar}>
-            <SidebarList />
+            <SidebarList blogInfo={blogInfo} />
           </div>
         )}
         <div className={styles.bodyWrap}>

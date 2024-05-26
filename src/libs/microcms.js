@@ -1,5 +1,4 @@
 import { createClient } from "microcms-js-sdk";
-import { NextResponse } from "next/server";
 import { notFound } from "next/navigation";
 
 // '.env.local'ファイルにmicroCMSの'サービスドメイン'、'APIキー'が無い場合はエラーメッセージを表示
@@ -33,12 +32,7 @@ export const getArticlesList = async (queries) => {
       //   },
       // },
     });
-
-    return NextResponse.json({
-      data: response.contents ?? null,
-      error: null,
-      totalCount: response.totalCount,
-    });
+    return response;
   } catch (error) {
     console.error("getArticlesListでエラーが発生しました => ", error);
     notFound();
@@ -54,11 +48,7 @@ export const getArticlesDetail = async (contentId, queries) => {
       contentId,
       queries,
     });
-
-    return NextResponse.json({
-      data: response ?? null,
-      error: null,
-    });
+    return response;
   } catch (error) {
     console.error("getArticlesDetailでエラーが発生しました => ", error);
     notFound();
@@ -72,12 +62,7 @@ export const getCategoriesList = async (queries) => {
       endpoint: "categories",
       queries,
     });
-
-    return NextResponse.json({
-      data: response.contents ?? null,
-      error: null,
-      totalCount: response.totalCount,
-    });
+    return response;
   } catch (error) {
     console.error("getCategoriesListでエラーが発生しました", error);
     notFound();
@@ -92,11 +77,7 @@ export const getCategoriesDetail = async (contentId, queries) => {
       contentId,
       queries,
     });
-
-    return NextResponse.json({
-      data: response ?? null,
-      error: null,
-    });
+    return response;
   } catch (error) {
     console.error("getCategoriesDetailでエラーが発生しました", error);
     notFound();
@@ -110,11 +91,7 @@ export const getTagsList = async (queries) => {
       endpoint: "tags",
       queries,
     });
-
-    return NextResponse.json({
-      data: response.contents ?? null,
-      error: null,
-    });
+    return response;
   } catch (error) {
     console.error("getTagsListでエラーが発生しました => ", error);
     notFound();
@@ -129,11 +106,7 @@ export const getTagsDetail = async (contentId, queries) => {
       contentId,
       queries,
     });
-
-    return NextResponse.json({
-      data: response ?? null,
-      error: null,
-    });
+    return response;
   } catch (error) {
     console.error("getTagsDetailでエラーが発生しました", error);
     notFound();

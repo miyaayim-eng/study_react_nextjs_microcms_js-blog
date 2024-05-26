@@ -5,7 +5,6 @@ import { Tag } from "@/features/components/blog/Tag";
 import { DateCreated } from "@/features/components/blog/date/DateCreated";
 import { DateRevised } from "@/features/components/blog/date/DateRevised";
 import noImage from "@/public/assets/images/no-image.png";
-import { getCategoriesDetail, getTagsDetail } from "@/libs/microcms";
 
 export const Card = async ({ article }) => {
   // サムネイル画像設定
@@ -21,20 +20,12 @@ export const Card = async ({ article }) => {
     thumbnailAlt = article.title;
   } else if (article.tags.length > 0) {
     // タグに登録したサムネイル画像
-    const tagsDetailResponse = await getTagsDetail(article.tags[0].id, {
-      fields: "thumbnail",
-    });
-    const { data } = await tagsDetailResponse.json();
-    thumbnail = data.thumbnail;
+    thumbnail = article.tags[0].thumbnail;
+    thumbnailAlt = article.tags[0].name;
   }
   if (!thumbnail) {
     // カテゴリーに登録したサムネイル画像
-    const categoriesDetailResponse = await getCategoriesDetail(
-      article.category.id,
-      { fields: "thumbnail" }
-    );
-    const { data } = await categoriesDetailResponse.json();
-    thumbnail = data.thumbnail;
+    thumbnail = article.category.thumbnail;
     thumbnailAlt = article.category.name;
   }
   if (thumbnail) {

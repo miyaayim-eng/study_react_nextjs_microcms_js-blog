@@ -5,7 +5,7 @@ import { SidebarProfile } from "@/features/components/blog/sidebar/SidebarProfil
 import { SidebarCategories } from "@/features/components/blog/sidebar/SidebarCategories";
 import { SidebarTags } from "@/features/components/blog/sidebar/SidebarTags";
 
-export const SidebarList = ({ currentCategory, currentTag, currentPage }) => {
+export const SidebarList = ({ blogInfo, currentCategory, currentTag }) => {
   return (
     <div className={styles.sidebar}>
       <div>
@@ -44,7 +44,7 @@ export const SidebarList = ({ currentCategory, currentTag, currentPage }) => {
             </p>
             <SidebarCategories
               currentCategory={currentCategory}
-              currentPage={currentPage}
+              blogInfo={blogInfo}
             />
           </div>
           <div className={`${styles.sidebar__item} ${styles.sidebar__tags}`}>
@@ -56,7 +56,7 @@ export const SidebarList = ({ currentCategory, currentTag, currentPage }) => {
               </svg>
               <span className={styles.sidebar__title__text}>Tags</span>
             </p>
-            <SidebarTags currentTag={currentTag} currentPage={currentPage} />
+            <SidebarTags currentTag={currentTag} blogInfo={blogInfo} />
           </div>
         </div>
       </div>

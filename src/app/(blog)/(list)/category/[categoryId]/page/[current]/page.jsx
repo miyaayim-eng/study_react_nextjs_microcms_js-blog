@@ -9,9 +9,11 @@ import {
 } from "@/constants/metadata";
 import styles from "./page.module.scss";
 import { LIMIT } from "@/constants";
-import { getArticlesList, getCategoriesDetail } from "@/libs/microcms";
+import { getArticlesList } from "@/libs/microcms";
 import { Cards } from "@/features/components/blog/article/list/Cards";
 import { Pagination } from "@/features/components/blog/article/list/Pagination";
+import { generateBlogInfo } from "@/libs/generateBlogInfo";
+const blogInfo = await generateBlogInfo();
 
 // ページネーションページの静的パスを作成
 export async function generateStaticParams({ params }) {
@@ -19,8 +21,7 @@ export async function generateStaticParams({ params }) {
   const filters = `category[equals]${params.categoryId}`;
   const queries = { limit: LIMIT, filters: filters };
   const articlesListResponse = await getArticlesList(queries);
-  // 取得しているデータがわかりやすいように、変数名を変更しています。
-  const { totalCount: totalCount } = await articlesListResponse.json();
+  const { totalCount: totalCount } = articlesListResponse;
 
   if (totalCount <= LIMIT) {
     return []; // ページが1ページ以下の場合はパスを生成しない
@@ -39,12 +40,10 @@ export async function generateStaticParams({ params }) {
 }
 
 export async function generateMetadata({ params }) {
-  const categoriesDetailResponse = await getCategoriesDetail(
-    params.categoryId,
-    { fields: "name" }
-  );
-  const { data } = await categoriesDetailResponse.json();
-  const currentCategoryName = data.name;
+  const currentCategory = params.categoryId;
+  const currentCategoryName = blogInfo.categories.find(
+    (category) => category.id === currentCategory
+  )?.name;
   const title = `${currentCategoryName}${FILTER_SEPARATOR}カテゴリー`;
   const description = `${currentCategoryName}${FILTER_DESCRIPTION}`;
   const pageUrl = `category/${params.categoryId}/page/${params.current}/`;
@@ -89,8 +88,7 @@ export default async function Page({ params }) {
   );
 
   // 取得しているデータがわかりやすいように、変数名を変更しています。
-  const { data: articles, totalCount: totalCount } =
-    await articlesListResponse.json();
+  const { contents: articles, totalCount: totalCount } = articlesListResponse;
 
   if (articles.length === 0) {
     notFound();

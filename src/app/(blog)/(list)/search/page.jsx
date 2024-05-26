@@ -13,6 +13,8 @@ import { LIMIT } from "@/constants";
 import { SidebarList } from "@/features/components/blog/sidebar/SidebarList";
 import { Cards } from "@/features/components/blog/article/list/Cards";
 import { Pagination } from "@/features/components/blog/article/list/Pagination";
+import { generateBlogInfo } from "@/libs/generateBlogInfo";
+const blogInfo = await generateBlogInfo();
 
 export async function generateMetadata({ searchParams }) {
   const searchKeyword = searchParams.q;
@@ -52,8 +54,7 @@ export default async function Page({ searchParams }) {
   );
 
   // 取得しているデータがわかりやすいように、変数名を変更しています。
-  const { data: articles, totalCount: totalCount } =
-    await articlesListResponse.json();
+  const { contents: articles, totalCount: totalCount } = articlesListResponse;
 
   return (
     <>
@@ -86,7 +87,7 @@ export default async function Page({ searchParams }) {
           )}
         </div>
         <div className={styles.sidebar}>
-          <SidebarList />
+          <SidebarList blogInfo={blogInfo} />
         </div>
       </div>
     </>

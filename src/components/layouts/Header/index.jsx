@@ -1,16 +1,10 @@
 import Link from "next/link";
 import styles from "./index.module.scss";
-import { getCategoriesList } from "@/libs/microcms";
-import { MenuButton } from "@/components/layouts/Menu/MenuButton";
-import { MenuContents } from "@/components/layouts/Menu/MenuContents";
+// import { MenuButton } from "@/components/layouts/Menu/MenuButton";
+// import { MenuContents } from "@/components/layouts/Menu/MenuContents";
 
-export const Header = async () => {
-  // ブログカテゴリーを取得
-  const queries = { fields: "id,name" };
-  const categoriesListResponse = await getCategoriesList(queries);
-
-  // 取得しているデータがわかりやすいように、変数名を変更しています。
-  const { data: categories } = await categoriesListResponse.json();
+export const Header = async ({ blogInfo }) => {
+  const categories = blogInfo.categories;
 
   return (
     <>
@@ -41,9 +35,9 @@ export const Header = async () => {
             </ul>
           </nav>
         </div>
-        <MenuButton />
+        {/* <MenuButton /> */}
       </header>
-      <MenuContents />
+      {/* <MenuContents /> */}
     </>
   );
 };
