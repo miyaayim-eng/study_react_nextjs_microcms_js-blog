@@ -29,7 +29,7 @@ import "@sass/foundation/_index.scss";
 import {
   SITE_NAME,
   PAGE_SEPARATOR,
-  NEXT_PUBLIC_URL,
+  BASE_URL,
   OGP,
   TWITTER,
   HOME_DESCRIPTION,
@@ -42,7 +42,7 @@ import { Footer } from "@/components/layouts/Footer";
 
 // 共通のmetaタグ
 export const metadata = {
-  metadataBase: new URL(NEXT_PUBLIC_URL),
+  metadataBase: new URL(BASE_URL),
   title: {
     default: SITE_NAME,
     template: `%s${PAGE_SEPARATOR}${SITE_NAME}`,
@@ -57,7 +57,7 @@ export const metadata = {
       template: `%s${PAGE_SEPARATOR}${SITE_NAME}`,
     },
     description,
-    url: NEXT_PUBLIC_URL,
+    url: BASE_URL,
     siteName: SITE_NAME,
     locale: OGP.LOCALE,
     type: "website",

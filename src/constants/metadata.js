@@ -1,8 +1,7 @@
 export const SITE_NAME = "みやがめボックス";
 export const PAGE_SEPARATOR = " | ";
 export const FILTER_SEPARATOR = " - ";
-export const NEXT_PUBLIC_URL =
-  process.env.NEXT_PUBLIC_URL || "http://localhost:3000";
+export const BASE_URL = process.env.BASE_URL || "http://localhost:3000";
 
 export const OGP = {
   IMAGE: "/opengraph-image.png",

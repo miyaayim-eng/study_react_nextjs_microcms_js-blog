@@ -3,7 +3,7 @@ import styles from "./page.module.scss";
 import {
   SITE_NAME,
   FILTER_SEPARATOR,
-  NEXT_PUBLIC_URL,
+  BASE_URL,
   OGP,
   TWITTER,
   FILTER_DESCRIPTION,
@@ -31,7 +31,7 @@ export async function generateMetadata({ searchParams }) {
     openGraph: {
       title,
       description,
-      url: `${NEXT_PUBLIC_URL}${pageUrl}`,
+      url: `${BASE_URL}${pageUrl}`,
       siteName: SITE_NAME,
       locale: OGP.LOCALE,
       type: "article",

@@ -6,7 +6,7 @@ if (!process.env.MICROCMS_SERVICE_DOMAIN) {
   throw new Error("MICROCMS_SERVICE_DOMAIN が設定されていません。");
 }
 if (!process.env.MICROCMS_API_KEY) {
-  throw new Error("API_KEY が設定されていません。");
+  throw new Error("MICROCMS_API_KEY が設定されていません。");
 }
 
 // API取得用のクライアントを作成

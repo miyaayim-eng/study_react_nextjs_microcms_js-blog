@@ -1,5 +1,5 @@
 import styles from "./page.module.scss";
-import { SITE_NAME, NEXT_PUBLIC_URL, OGP, TWITTER } from "@/constants/metadata";
+import { SITE_NAME, BASE_URL, OGP, TWITTER } from "@/constants/metadata";
 import { getArticlesList, getArticlesDetail } from "@/libs/microcms";
 import { Article } from "@/features/components/blog/article/detail/Article";
 
@@ -18,7 +18,7 @@ export async function generateMetadata({ params, searchParams }) {
     openGraph: {
       title: article.title,
       description: article.description ? article.description : article.title,
-      url: `${NEXT_PUBLIC_URL}${pageUrl}`,
+      url: `${BASE_URL}${pageUrl}`,
       siteName: SITE_NAME,
       locale: OGP.LOCALE,
       type: "article",

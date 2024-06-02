@@ -2,7 +2,7 @@ import { generateArticlesInfo } from "@/libs/generateArticlesInfo";
 
 export default async function sitemap() {
   const articleInfo = await generateArticlesInfo();
-  const baseURL = process.env.NEXT_PUBLIC_URL || "";
+  const baseURL = process.env.BASE_URL || "";
   const _lastModified = new Date(); // 関数が実行された瞬間の現在の日付と時刻を取得
 
   // トップページなどの静的ページ
