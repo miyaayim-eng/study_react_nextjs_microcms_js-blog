@@ -1,4 +1,4 @@
-export const SITE_NAME = "みやがめボックス";
+export const SITE_NAME = "サイト名";
 export const PAGE_SEPARATOR = " | ";
 export const FILTER_SEPARATOR = " - ";
 export const BASE_URL = process.env.BASE_URL || "http://localhost:3000";
@@ -14,6 +14,5 @@ export const TWITTER = {
   // CREATOR: "@hogehoge",
 };
 
-export const HOME_DESCRIPTION =
-  "主にWeb制作についての技術記事を掲載しているブログサイトです。HTML、CSS、JavaScript、React、Next";
+export const HOME_DESCRIPTION = "HOMEのDESCRIPTION";
 export const FILTER_DESCRIPTION = "に関する記事一覧です。";

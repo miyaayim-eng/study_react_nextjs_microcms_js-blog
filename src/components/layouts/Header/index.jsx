@@ -11,7 +11,7 @@ export const Header = async ({ blogInfo }) => {
       <header className={styles.header}>
         <p className={styles.logo}>
           <Link href="/" className={styles.logo__link}>
-            <span className={styles.logo__text}>みやがめボックス</span>
+            <span className={styles.logo__text}>サイト名</span>
           </Link>
         </p>
         <div className={styles.menu}>

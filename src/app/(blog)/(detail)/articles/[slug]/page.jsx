@@ -49,7 +49,9 @@ export async function generateMetadata({ params, searchParams }) {
 // 自分のまとめ：これがなくても表示は問題なくできるが、build時に事前に生成しておくことで、データ取得をせずとも事前に用意したデータを表示することでページ表示速度が向上する。ということだと思う。
 export async function generateStaticParams() {
   // ブログ一覧をAPI経由で取得します
-  const articlesListResponse = await getArticlesList();
+  // 取得件数には最大値である`100`を設定（初期値：10）
+  const queries = { limit: 100 };
+  const articlesListResponse = await getArticlesList(queries);
 
   // 取得しているデータがわかりやすいように、変数名を変更しています。
   const { contents: articles } = articlesListResponse;
