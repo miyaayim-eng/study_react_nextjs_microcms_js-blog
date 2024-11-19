@@ -18,9 +18,7 @@ export const SidebarProfile = () => {
       </div>
       <div className={styles.text}>
         <p>
-          2023年からWeb業界に足を踏み入れた新参者です。
-          <br />
-          今はReactを勉強中です。
+          プロフィールテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキスト
         </p>
       </div>
     </div>
