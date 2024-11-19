@@ -74,8 +74,7 @@ export async function generateStaticParams() {
 
 export default async function Page({ params, searchParams }) {
   // URLパラメータのIDを参照して、ブログの詳細を取得
-  const article = await getArticlesDetail(params.slug, {
-    draftKey: searchParams.dk,
-  });
+  const queries = { draftKey: searchParams.dk };
+  const article = await getArticlesDetail(params.slug, queries);
   return <Article article={article} />;
 }

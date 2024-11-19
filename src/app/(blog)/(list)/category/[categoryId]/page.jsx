@@ -47,10 +47,10 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function Page({ params }) {
-  // URLから現在のページIDを取得
+  // URLからカテゴリIDを取得
   const currentCategory = params.categoryId;
   // ブログ一覧を取得
-  const filters = `category[equals]${params.categoryId}`;
+  const filters = `category[equals]${currentCategory}`;
   const queries = { limit: LIMIT, filters: filters };
   const articlesListResponse = await getArticlesList(queries).catch(() =>
     notFound()
